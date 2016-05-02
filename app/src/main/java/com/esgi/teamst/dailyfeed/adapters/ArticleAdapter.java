@@ -6,8 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.models.Article;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -42,10 +47,19 @@ public class ArticleAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        ViewHolder viewHolder;
+
         if(convertView == null){
-           // ((Activity) mContext).getLayoutInflater().inflate()
+            ((Activity) mContext).getLayoutInflater().inflate(R.layout.item_article,parent);
+            viewHolder = new ViewHolder();
         }
 
         return null;
+    }
+
+    private class ViewHolder{
+        private TextView mArticleTitle;
+        private TextView mArticleContent;
+        private ImageView mArticleImage;
     }
 }
