@@ -1,30 +1,55 @@
 package com.esgi.teamst.dailyfeed.models;
 
+import java.util.Date;
+
 /**
  * Classe metier représentant un article de presse
  */
 public class Article {
 
-    private String mTitle;
-    private String mContent;
-    private String mSource;
+    private String title;
+    private String desciption;
+    private String content;
+    private Date date;
 
-    public String getmTitle() {
-        return mTitle;
+    public Article(){}
+
+    public Article(String title, String desciption, String contenu, Date date) {
+        this.title = title;
+        this.desciption = desciption;
+        this.content = contenu;
+        this.date = date;
     }
-    public void setmTitle(String mTitle) {
-        this.mTitle = mTitle;
+
+    public String getTitle() {
+        return title;
     }
-    public String getmContent() {
-        return mContent;
+
+    public void setTitle(String title) {
+        this.title = title;
     }
-    public void setmContent(String mContent) {
-        this.mContent = mContent;
+
+    public String getDesciption() {
+        return desciption;
     }
-    public String getmSource() {
-        return mSource;
+
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
     }
-    public void setmSource(String mSource) {
-        this.mSource = mSource;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String contenu) {
+        this.content = contenu;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
