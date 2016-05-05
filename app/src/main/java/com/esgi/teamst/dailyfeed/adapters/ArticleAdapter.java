@@ -2,6 +2,7 @@ package com.esgi.teamst.dailyfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,16 +51,24 @@ public class ArticleAdapter extends BaseAdapter {
         ViewHolder viewHolder;
 
         if(convertView == null){
-            ((Activity) mContext).getLayoutInflater().inflate(R.layout.item_article,parent);
+            convertView = ((Activity) mContext).getLayoutInflater().inflate(R.layout.item_article,parent,false);
             viewHolder = new ViewHolder();
+            viewHolder.mArticleSource = (TextView) convertView.findViewById(R.id.text_article_source);
+            viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
+            viewHolder.mArticleTitle = (TextView) convertView.findViewById(R.id.text_article_title);
+
+            convertView.setTag(viewHolder);
+
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        return null;
+        return convertView;
     }
 
     private class ViewHolder{
         private TextView mArticleTitle;
-        private TextView mArticleContent;
+        private TextView mArticleSource;
         private ImageView mArticleImage;
     }
 }

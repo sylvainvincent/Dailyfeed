@@ -5,9 +5,27 @@ package com.esgi.teamst.dailyfeed.models;
  */
 public class Article {
 
+    private int mId;
     private String mTitle;
     private String mContent;
-    private String mSource;
+    private int mSourceId;
+
+    public Article() {}
+
+    public Article(int id, String title, String content, int sourceId) {
+        mId = id;
+        mTitle = title;
+        mContent = content;
+        mSourceId = sourceId;
+    }
+
+    public int getmId() {
+        return mId;
+    }
+
+    public void setmId(int mId) {
+        this.mId = mId;
+    }
 
     public String getmTitle() {
         return mTitle;
@@ -21,10 +39,10 @@ public class Article {
     public void setmContent(String mContent) {
         this.mContent = mContent;
     }
-    public String getmSource() {
-        return mSource;
+    public int getmSource() {
+        return mSourceId;
     }
-    public void setmSource(String mSource) {
-        this.mSource = mSource;
+    public void setmSource(int sourceId) {
+        this.mSourceId = sourceId;
     }
 }
