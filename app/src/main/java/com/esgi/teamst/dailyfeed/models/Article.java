@@ -8,16 +8,14 @@ import java.util.Date;
 public class Article {
 
     private String title;
-    private String desciption;
-    private String content;
+    private String link;
     private Date date;
 
     public Article(){}
 
-    public Article(String title, String desciption, String contenu, Date date) {
+    public Article(String title, String link, Date date) {
         this.title = title;
-        this.desciption = desciption;
-        this.content = contenu;
+        this.link = link;
         this.date = date;
     }
 
@@ -29,27 +27,19 @@ public class Article {
         this.title = title;
     }
 
-    public String getDesciption() {
-        return desciption;
-    }
-
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String contenu) {
-        this.content = contenu;
-    }
-
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
