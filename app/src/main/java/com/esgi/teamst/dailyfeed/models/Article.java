@@ -39,10 +39,10 @@ public class Article {
     public void setmContent(String mContent) {
         this.mContent = mContent;
     }
-    public int getmSource() {
+    public int getmSourceId() {
         return mSourceId;
     }
-    public void setmSource(int sourceId) {
+    public void setmSourceId(int sourceId) {
         this.mSourceId = sourceId;
     }
 }

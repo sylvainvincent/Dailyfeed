@@ -2,11 +2,9 @@ package com.esgi.teamst.dailyfeed.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 
 import com.esgi.teamst.dailyfeed.models.Article;
-
-import java.util.Objects;
 
 /**
  * Created by sylvainvincent on 05/05/16.
@@ -20,7 +18,6 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public static final String KEY_CONTENT = "article_content";
     public static final String KEY_SOURCE_ID = SourceDAO.KEY_ID;
 
-
     public static final String CREATE_TABLE = "CREATE TABLE " +
             TABLE_NAME + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -29,20 +26,10 @@ public class ArticleDAO extends AbstractDAO<Article> {
             "FOREIGN KEY(" + KEY_SOURCE_ID + ") REFERENCES " +
             SourceDAO.TABLE_NAME + "(" + SourceDAO.KEY_ID + "))";
 
-    private SQLiteDatabase database = null;
-    private DatabaseHandler sqliteHelper;
+    public static final String[] ALL_COLUMNS = {KEY_ID, KEY_TITLE, KEY_CONTENT, KEY_SOURCE_ID};
 
     public ArticleDAO(Context context) {
         super(context);
-    }
-
-    public SQLiteDatabase open() {
-        this.database = sqliteHelper.getWritableDatabase();
-        return database;
-    }
-
-    public void close() {
-        database.close();
     }
 
     @Override
@@ -50,15 +37,47 @@ public class ArticleDAO extends AbstractDAO<Article> {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, article.getmTitle());
         values.put(KEY_CONTENT,article.getmContent());
-        values.put(KEY_SOURCE_ID, article.getmSource());
+        values.put(KEY_SOURCE_ID, article.getmSourceId());
 
-        database.insert(TABLE_NAME, null, values);
+        getSqliteDb().insert(TABLE_NAME, null, values);
     }
 
     @Override
-    public Article get(int i) {
-        return null;
+    public Article get(int id) {
+        Cursor mCursor = getSqliteDb().query(true, TABLE_NAME, ALL_COLUMNS, KEY_ID + "=" + id,
+                null, null, null, null, null);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+            return cursorToObject(mCursor);
+        } else {
+            return null;
+        }
     }
 
+    @Override
+    public boolean update(int id, Article article) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, article.getmTitle());
+        values.put(KEY_CONTENT,article.getmContent());
+        values.put(KEY_SOURCE_ID, article.getmSourceId());
+
+        return getSqliteDb().update(TABLE_NAME, values, KEY_ID + "=" + id, null) > 0;
+    }
+
+    @Override
+    public boolean delete(int id, Article article) {
+        return getSqliteDb().delete(TABLE_NAME, KEY_ID + "=" + id, null) > 0;
+    }
+
+    @Override
+    public Article cursorToObject(Cursor cursor) {
+        Article article = new Article();
+        article.setmId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+        article.setmTitle(cursor.getString(cursor.getColumnIndex(KEY_ID)));
+        article.setmContent(cursor.getString(cursor.getColumnIndex(KEY_ID)));
+        article.setmSourceId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+        return article;
+    }
 
 }

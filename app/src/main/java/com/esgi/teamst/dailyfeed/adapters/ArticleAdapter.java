@@ -2,6 +2,7 @@ package com.esgi.teamst.dailyfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.transition.ArcMotion;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,11 @@ public class ArticleAdapter extends BaseAdapter {
 
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
+        }
+        Article article = mArticleArrayList.get(position);
+
+        if(article != null){
+            viewHolder.mArticleTitle.setText(article.getmTitle());
         }
 
         return convertView;
