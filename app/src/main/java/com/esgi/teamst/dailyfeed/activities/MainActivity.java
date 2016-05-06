@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView mRecyclerViewArticles;
+    ListView mlistViewArticles;
     FloatingActionButton fab;
 
     @Override
@@ -34,12 +35,12 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Article> articleArrayList = new ArrayList<>();
         articleArrayList.add(new Article(1,"test","test2",1));
         articleArrayList.add(new Article(2,"bonjour","test2",1));
-        //mRecyclerViewArticles.setAdapter(new ArticleAdapter(this,articleArrayList));
+        mlistViewArticles.setAdapter(new ArticleAdapter(this, articleArrayList));
     }
 
     private void initViews(){
-        mRecyclerViewArticles = (RecyclerView) findViewById(R.id.recyclerview_articles);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        mlistViewArticles = (ListView) findViewById(R.id.listview_articles);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
