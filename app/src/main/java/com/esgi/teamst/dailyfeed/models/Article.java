@@ -22,11 +22,9 @@ public class Article {
     public int getmId() {
         return mId;
     }
-
     public void setmId(int mId) {
         this.mId = mId;
     }
-
     public String getmTitle() {
         return mTitle;
     }

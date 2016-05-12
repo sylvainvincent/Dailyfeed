@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
@@ -14,7 +13,10 @@ import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
 import com.esgi.teamst.dailyfeed.models.Article;
 
 import java.util.ArrayList;
-
+/**
+ * Guideline utilisé : https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md
+ * + Idiomes : http://feanorin.developpez.com/tutoriels/android/idiomes/
+ */
 public class MainActivity extends AppCompatActivity {
 
     ListView mlistViewArticles;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews(){
-        mlistViewArticles = (ListView) findViewById(R.id.listview_articles);
+        mlistViewArticles = (ListView) findViewById(R.id.list_articles);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

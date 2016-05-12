@@ -77,16 +77,16 @@ public class XMLTaskHandler extends AsyncTask<String, Void, String> {
                     }else if (currentArticle != null) {
                         //check for website title
                         if(name.equals("title")){
-                            currentArticle.setTitle(parser.nextText());
+                            currentArticle.setmTitle(parser.nextText());
                         }else{
                             if(name.equals("title")){
-                                currentArticle.setTitle(parser.nextText());
+                                currentArticle.setmTitle(parser.nextText());
                             }else if(name.equals("pubDate")){
-                                currentArticle.setDesciption(parser.nextText());
+                               // currentArticle.setDesciption(parser.nextText());
                             }else if(name.equals("description")){
-                                currentArticle.setDesciption(parser.nextText());
+                               // currentArticle.setDesciption(parser.nextText());
                             }else if(name.equals("content")){
-                                currentArticle.setContent(parser.nextText());
+                                currentArticle.setmContent(parser.nextText());
                             }
                         }
                     }

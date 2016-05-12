@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -67,6 +68,7 @@ public class ArticleAdapter extends BaseAdapter {
 
         if(article != null){
             viewHolder.mArticleTitle.setText(article.getmTitle());
+            Picasso.with(mContext).load("http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png").into(viewHolder.mArticleImage);
         }
 
         return convertView;
