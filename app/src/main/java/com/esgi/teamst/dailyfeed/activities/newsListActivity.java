@@ -42,7 +42,6 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         mlistViewArticles = (ListView) findViewById(R.id.list_articles);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent.getId() == R.id.list_articles) {
