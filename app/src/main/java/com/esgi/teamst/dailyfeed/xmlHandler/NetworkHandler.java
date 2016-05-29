@@ -1,4 +1,4 @@
-package com.esgi.teamst.dailyfeed.xmlParsers;
+package com.esgi.teamst.dailyfeed.xmlHandler;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
