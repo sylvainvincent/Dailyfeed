@@ -50,15 +50,15 @@
         android:inputType="textPassword"
         android:hint="Mot de passe"/>
 
-    <TextView
+    <Button
+        android:id="@+id/button_login"
         android:layout_width="wrap_content"
-        android:onClick="loginAction"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_gravity="center"
         android:textColor="@android:color/white"
         android:background="@color/colorAccent"
-        android:padding="7dp"
+        android:padding="2dp"
         android:shadowColor="#000"
         android:shadowDx="1"
         android:shadowDy="1"
