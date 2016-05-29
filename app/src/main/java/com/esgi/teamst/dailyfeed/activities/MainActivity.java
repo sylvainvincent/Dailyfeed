@@ -1,55 +1,77 @@
 package com.esgi.teamst.dailyfeed.activities;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
+import com.esgi.teamst.dailyfeed.fragments.LoginFragment;
+import com.esgi.teamst.dailyfeed.fragments.RegistrationLogin;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by sylvainvincent on 29/05/16.
+ */
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,LoginFragment.LoginFragmentCallback {
+
+    public static final String TAG = MainActivity.class.getSimpleName();
+    protected TextView mTextActionChange;
+    protected TextView mTitleMain;
+    private FrameLayout mFragmentMain;
+    private LoginFragment mLoginFragment;
+    private RegistrationLogin mRegistrationLogin;
+    private boolean mChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        super.setContentView(R.layout.activity_main);
+        initView();
+        mLoginFragment = new LoginFragment();
+        mRegistrationLogin = new RegistrationLogin();
+        getFragmentManager().beginTransaction().replace(R.id.frame_container_main, mLoginFragment).commit();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+    }
+
+    private void initView() {
+        mFragmentMain = (FrameLayout) findViewById(R.id.frame_container_main);
+        mTextActionChange = (TextView) findViewById(R.id.text_action_change);
+        mTextActionChange.setOnClickListener(MainActivity.this);
+        mTitleMain = (TextView) findViewById(R.id.title_main);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.text_action_change) {
+            if (!mChange) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.frame_container_main, mRegistrationLogin);
+                ft.commit();
+                mChange = true;
+                mTitleMain.setText(R.string.title_subscription);
+                mTextActionChange.setText(R.string.action_to_login);
+            } else {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.frame_container_main, mLoginFragment);
+                ft.commit();
+                mChange = false;
+                mTitleMain.setText(R.string.title_login);
+                mTextActionChange.setText(R.string.action_to_subscription);
             }
-        });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public void connection() {
+        Log.i(TAG, "connection: réussie");
+        startActivity(new Intent(MainActivity.this, newsListActivity.class));
     }
 }
-

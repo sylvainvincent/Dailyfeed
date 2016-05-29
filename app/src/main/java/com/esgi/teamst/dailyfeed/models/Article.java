@@ -7,39 +7,58 @@ import java.util.Date;
  */
 public class Article {
 
-    private String title;
-    private String link;
-    private Date date;
+    private int mId;
+    private String mTitle;
+    private String mContent;
+    private String mThumbnailLink;
+    private Date mPublishedDate;
+    private int mSourceId;
 
-    public Article(){}
+    public Article() {}
 
-    public Article(String title, String link, Date date) {
-        this.title = title;
-        this.link = link;
-        this.date = date;
+    public Article(int mId, String mTitle, String mContent, String mThumbnailLink, Date mPublishedDate, int mSourceId) {
+        this.mId = mId;
+        this.mTitle = mTitle;
+        this.mContent = mContent;
+        this.mThumbnailLink = mThumbnailLink;
+        this.mPublishedDate = mPublishedDate;
+        this.mSourceId = mSourceId;
     }
 
-    public String getTitle() {
-        return title;
+    public int getmId() {
+        return mId;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setmId(int mId) {
+        this.mId = mId;
     }
-
-    public Date getDate() {
-        return date;
+    public String getmTitle() {
+        return mTitle;
     }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
     }
-
-    public String getLink() {
-        return link;
+    public String getmContent() {
+        return mContent;
     }
-
-    public void setLink(String link) {
-        this.link = link;
+    public void setmContent(String mContent) {
+        this.mContent = mContent;
+    }
+    public int getmSourceId() {
+        return mSourceId;
+    }
+    public void setmSourceId(int sourceId) {
+        this.mSourceId = sourceId;
+    }
+    public String getmThumbnailLink() {
+        return mThumbnailLink;
+    }
+    public void setmThumbnailLink(String mThumbnailLink) {
+        this.mThumbnailLink = mThumbnailLink;
+    }
+    public Date getmPublishedDate() {
+        return mPublishedDate;
+    }
+    public void setmPublishedDate(Date mPublishedDate) {
+        this.mPublishedDate = mPublishedDate;
     }
 }
