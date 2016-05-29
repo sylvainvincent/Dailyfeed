@@ -11,9 +11,32 @@
         android:alpha="0.5"
         android:src="@drawable/background"/>
 
+    <TextView
+        android:id="@+id/title_main"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="26sp"
+        android:textColor="#000"
+        android:shadowColor="#FFF"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:textStyle="bold"
+        android:text="@string/title_login"/>
+
     <FrameLayout
-        android:id="@+id/fragment_main"
+        android:id="@+id/frame_container_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/text_action_change"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/action_to_subscription"/>
 
 </FrameLayout>

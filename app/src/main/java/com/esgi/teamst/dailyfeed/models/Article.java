@@ -1,5 +1,7 @@
 package com.esgi.teamst.dailyfeed.models;
 
+import java.util.Date;
+
 /**
  * Classe metier représentant un article de presse
  */
@@ -8,15 +10,19 @@ public class Article {
     private int mId;
     private String mTitle;
     private String mContent;
+    private String mThumbnailLink;
+    private Date mPublishedDate;
     private int mSourceId;
 
     public Article() {}
 
-    public Article(int id, String title, String content, int sourceId) {
-        mId = id;
-        mTitle = title;
-        mContent = content;
-        mSourceId = sourceId;
+    public Article(int mId, String mTitle, String mContent, String mThumbnailLink, Date mPublishedDate, int mSourceId) {
+        this.mId = mId;
+        this.mTitle = mTitle;
+        this.mContent = mContent;
+        this.mThumbnailLink = mThumbnailLink;
+        this.mPublishedDate = mPublishedDate;
+        this.mSourceId = mSourceId;
     }
 
     public int getmId() {
@@ -42,5 +48,17 @@ public class Article {
     }
     public void setmSourceId(int sourceId) {
         this.mSourceId = sourceId;
+    }
+    public String getmThumbnailLink() {
+        return mThumbnailLink;
+    }
+    public void setmThumbnailLink(String mThumbnailLink) {
+        this.mThumbnailLink = mThumbnailLink;
+    }
+    public Date getmPublishedDate() {
+        return mPublishedDate;
+    }
+    public void setmPublishedDate(Date mPublishedDate) {
+        this.mPublishedDate = mPublishedDate;
     }
 }

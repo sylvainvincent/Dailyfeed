@@ -16,6 +16,8 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public static final String KEY_ID = "article_id";
     public static final String KEY_TITLE = "article_title";
     public static final String KEY_CONTENT = "article_content";
+    public static final String KEY_THUMBNAIL_LINK = "article_thumbnail_link";
+    public static final String KEY_PUBLISHED_DATE = "article_published_date";
     public static final String KEY_SOURCE_ID = SourceDAO.KEY_ID;
 
     public static final String CREATE_TABLE = "CREATE TABLE " +
@@ -23,6 +25,8 @@ public class ArticleDAO extends AbstractDAO<Article> {
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             KEY_TITLE + " TEXT," +
             KEY_CONTENT + " TEXT," +
+            KEY_THUMBNAIL_LINK + " TEXT," +
+            KEY_PUBLISHED_DATE + " TEXT," +
             "FOREIGN KEY(" + KEY_SOURCE_ID + ") REFERENCES " +
             SourceDAO.TABLE_NAME + "(" + SourceDAO.KEY_ID + "))";
 

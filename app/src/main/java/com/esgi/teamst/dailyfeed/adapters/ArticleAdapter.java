@@ -68,7 +68,7 @@ public class ArticleAdapter extends BaseAdapter {
 
         if(article != null){
             viewHolder.mArticleTitle.setText(article.getmTitle());
-            Picasso.with(mContext).load("http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png").into(viewHolder.mArticleImage);
+            Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
         }
 
         return convertView;

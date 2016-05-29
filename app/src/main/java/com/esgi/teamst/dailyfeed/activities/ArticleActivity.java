@@ -6,6 +6,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +18,7 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 /**
  * Created by sylvainvincent on 09/05/16.
  */
-public class ArticleActivity extends Activity {
+public class ArticleActivity extends AppCompatActivity {
 
     protected ImageView imageArticle;
     protected Toolbar toolbarArticle;
@@ -40,7 +41,7 @@ public class ArticleActivity extends Activity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
 
-        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
+        articleId = getIntent().getIntExtra(NewsListActivity.EXTRA_ARTICLE_ID, -1);
         initView();
 
 

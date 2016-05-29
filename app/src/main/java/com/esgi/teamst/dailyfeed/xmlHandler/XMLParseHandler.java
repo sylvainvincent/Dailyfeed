@@ -71,9 +71,9 @@ public class XMLParseHandler {
                     }else if (currentArticle != null) {
                         //check for website title
                         if(name.equals("title")){
-                            currentArticle.setTitle(parser.nextText());
+                            currentArticle.setmTitle(parser.nextText());
                         }else if(name.equals("link")){
-                            currentArticle.setLink(parser.nextText());
+                            currentArticle.setmThumbnailLink(parser.nextText());
                         }else if(name.equals("pubDate")){
                             //ex : Wed, 04 May 2016 09:05:25 +0000
                             SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
@@ -82,7 +82,7 @@ public class XMLParseHandler {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            currentArticle.setDate(articleDate);
+                            currentArticle.setmPublishedDate(articleDate);
                         }
                     }
                     break;

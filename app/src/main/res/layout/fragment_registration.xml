@@ -13,19 +13,19 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="26sp"
-            android:textColor="#FFF"
-            android:shadowColor="#000"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:textStyle="bold"
-            android:text="Inscription"/>
+        <!--<TextView-->
+            <!--android:id="@+id/title"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="26sp"-->
+            <!--android:textColor="#000"-->
+            <!--android:shadowColor="#FFF"-->
+            <!--android:shadowDx="1"-->
+            <!--android:shadowDy="1"-->
+            <!--android:shadowRadius="1"-->
+            <!--android:textStyle="bold"-->
+            <!--android:text="Inscription"/>-->
 
 
         <EditText

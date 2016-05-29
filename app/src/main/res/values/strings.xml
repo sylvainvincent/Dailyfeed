@@ -3,4 +3,9 @@
     <string name="action_settings">Settings</string>
     <string name="connection_error">Erreur de connection.Impossible de charger le contenu.</string>
     <string name="xml_error">Error de parsing XML.</string>
+    <string name="action_to_subscription">Pas encore de compte ? S\'incrire ici.</string>
+    <string name="action_to_login">Vous avez un compte ? Se connecter ici.</string>
+
+    <string name="title_login">Login</string>
+    <string name="title_subscription">Inscription</string>
 </resources>
