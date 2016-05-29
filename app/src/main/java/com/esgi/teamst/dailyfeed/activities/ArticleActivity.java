@@ -1,6 +1,5 @@
 package com.esgi.teamst.dailyfeed.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -41,7 +40,7 @@ public class ArticleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
 
-        articleId = getIntent().getIntExtra(NewsListActivity.EXTRA_ARTICLE_ID, -1);
+        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
         initView();
 
 

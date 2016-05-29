@@ -72,6 +72,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void connection() {
         Log.i(TAG, "connection: réussie");
-        startActivity(new Intent(MainActivity.this,NewsListActivity.class));
+        startActivity(new Intent(MainActivity.this, newsListActivity.class));
     }
 }
