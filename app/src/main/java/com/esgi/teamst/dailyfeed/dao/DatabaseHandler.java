@@ -23,12 +23,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SourceDAO.CREATE_TABLE);
         db.execSQL(ArticleDAO.CREATE_TABLE);
+        db.execSQL(UserDAO.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + SourceDAO.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ArticleDAO.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + UserDAO.TABLE_NAME);
 
         this.onCreate(db);
     }
