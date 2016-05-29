@@ -6,5 +6,7 @@ package com.esgi.teamst.dailyfeed.models;
 public class User {
 
     private int mId;
+    private String mEmail;
+    private String password;
 
 }
