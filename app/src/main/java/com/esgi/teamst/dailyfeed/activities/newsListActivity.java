@@ -11,9 +11,12 @@ import android.widget.ListView;
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Guideline utilisé : https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md
@@ -25,6 +28,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
 
     ListView mlistViewArticles;
+    private List<Article> articleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +36,23 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_news_list);
         this.initViews();
         ArrayList<Article> articleArrayList = new ArrayList<>();
-        articleArrayList.add(new Article(1, "test", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
-        articleArrayList.add(new Article(2, "bonjour", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
-        mlistViewArticles.setAdapter(new ArticleAdapter(this, articleArrayList));
-        mlistViewArticles.setOnItemClickListener(this);
+        //articleArrayList.add(new Article(1, "test", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
+        //articleArrayList.add(new Article(2, "bonjour", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
+        //mlistViewArticles.setAdapter(new ArticleAdapter(this, articleArrayList));
+        //mlistViewArticles.setOnItemClickListener(this);       articleList = new ArrayList<Article>();
+
+        articleList = new ArrayList<Article>();
+
+        try {
+            articleList = new XMLParseHandler().execute("http://feeds.feedburner.com/Phonandroid?format=xml").get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        mlistViewArticles.setAdapter(new ArticleAdapter(newsListActivity.this, articleList));
+
     }
 
     private void initViews(){
@@ -53,4 +70,3 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         }
     }
 }
-

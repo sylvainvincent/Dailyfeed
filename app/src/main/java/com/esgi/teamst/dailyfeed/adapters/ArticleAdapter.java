@@ -3,6 +3,7 @@ package com.esgi.teamst.dailyfeed.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.transition.ArcMotion;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +19,17 @@ import com.squareup.picasso.Picasso;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sylvainvincent on 30/04/16.
  */
 public class ArticleAdapter extends BaseAdapter {
 
-    private ArrayList<Article> mArticleArrayList;
+    private List<Article> mArticleArrayList;
     private Context mContext;
 
-    public ArticleAdapter(Context context, ArrayList<Article> articleArrayList){
+    public ArticleAdapter(Context context, List<Article> articleArrayList){
         mContext = context;
         mArticleArrayList = articleArrayList;
     }
@@ -55,8 +57,8 @@ public class ArticleAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = ((Activity) mContext).getLayoutInflater().inflate(R.layout.item_article,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.mArticleSource = (TextView) convertView.findViewById(R.id.text_article_source);
-            viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
+            //viewHolder.mArticleSource = (TextView) convertView.findViewById(R.id.text_article_source);
+            //viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
             viewHolder.mArticleTitle = (TextView) convertView.findViewById(R.id.text_article_title);
 
             convertView.setTag(viewHolder);
@@ -67,8 +69,9 @@ public class ArticleAdapter extends BaseAdapter {
         Article article = mArticleArrayList.get(position);
 
         if(article != null){
+            Log.d("ART_TITLE", article.getmTitle());
             viewHolder.mArticleTitle.setText(article.getmTitle());
-            Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
+            //Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
         }
 
         return convertView;
@@ -80,3 +83,4 @@ public class ArticleAdapter extends BaseAdapter {
         private ImageView mArticleImage;
     }
 }
+

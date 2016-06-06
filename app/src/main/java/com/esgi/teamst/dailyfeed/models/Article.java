@@ -10,13 +10,14 @@ public class Article {
     private int mId;
     private String mTitle;
     private String mContent;
+    private String mArticleLink;
     private String mThumbnailLink;
-    private Date mPublishedDate;
+    private String  mPublishedDate;
     private int mSourceId;
 
     public Article() {}
 
-    public Article(int mId, String mTitle, String mContent, String mThumbnailLink, Date mPublishedDate, int mSourceId) {
+    public Article(int mId, String mTitle, String mContent, String mThumbnailLink, String mPublishedDate, int mSourceId) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mContent = mContent;
@@ -55,10 +56,12 @@ public class Article {
     public void setmThumbnailLink(String mThumbnailLink) {
         this.mThumbnailLink = mThumbnailLink;
     }
-    public Date getmPublishedDate() {
+    public String getmPublishedDate() {
         return mPublishedDate;
     }
-    public void setmPublishedDate(Date mPublishedDate) {
+    public void setmPublishedDate(String mPublishedDate) {
         this.mPublishedDate = mPublishedDate;
     }
+    public String getmArticleLink() {return mArticleLink;}
+    public void setmArticleLink(String mArticleLink) {this.mArticleLink = mArticleLink;}
 }
