@@ -6,6 +6,8 @@ package com.esgi.teamst.dailyfeed.models;
 public class User {
 
     private int mId;
+    private String mFirstName;
+    private String mLastName;
     private String mEmail;
     private String password;
 
@@ -17,6 +19,22 @@ public class User {
 
     public void setmId(int mId) {
         this.mId = mId;
+    }
+
+    public String getmFirstName() {
+        return mFirstName;
+    }
+
+    public void setmFirstName(String mFirstName) {
+        this.mFirstName = mFirstName;
+    }
+
+    public String getmLastName() {
+        return mLastName;
+    }
+
+    public void setmLastName(String mLastName) {
+        this.mLastName = mLastName;
     }
 
     public String getmEmail() {

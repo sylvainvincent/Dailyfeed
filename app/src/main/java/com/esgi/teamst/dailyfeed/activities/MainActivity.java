@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.fragments.LoginFragment;
-import com.esgi.teamst.dailyfeed.fragments.RegistrationLogin;
+import com.esgi.teamst.dailyfeed.fragments.RegistrationFragment;
 
 /**
  * Created by sylvainvincent on 29/05/16.
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected TextView mTitleMain;
     private FrameLayout mFragmentMain;
     private LoginFragment mLoginFragment;
-    private RegistrationLogin mRegistrationLogin;
+    private RegistrationFragment mRegistrationFragment;
     private boolean mChange = false;
 
     @Override
@@ -32,17 +32,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         initView();
+        mTextActionChange.setOnClickListener(this);
         mLoginFragment = new LoginFragment();
-        mRegistrationLogin = new RegistrationLogin();
+        mRegistrationFragment = new RegistrationFragment();
         getFragmentManager().beginTransaction().replace(R.id.frame_container_main, mLoginFragment).commit();
-
 
     }
 
     private void initView() {
         mFragmentMain = (FrameLayout) findViewById(R.id.frame_container_main);
         mTextActionChange = (TextView) findViewById(R.id.text_action_change);
-        mTextActionChange.setOnClickListener(MainActivity.this);
         mTitleMain = (TextView) findViewById(R.id.title_main);
     }
 
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (!mChange) {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.frame_container_main, mRegistrationLogin);
+                ft.replace(R.id.frame_container_main, mRegistrationFragment);
                 ft.commit();
                 mChange = true;
                 mTitleMain.setText(R.string.title_subscription);
@@ -72,6 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void connection() {
         Log.i(TAG, "connection: réussie");
-        startActivity(new Intent(MainActivity.this, newsListActivity.class));
+        startActivity(new Intent(MainActivity.this, NewsListActivity.class));
     }
 }

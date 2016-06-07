@@ -28,11 +28,11 @@ public class SourceDAO extends AbstractDAO<Source> {
     }
 
     @Override
-    public void add(Source source) {
+    public boolean add(Source source) {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, source.getmName());
 
-        getSqliteDb().insert(TABLE_NAME, null, values);
+        return getSqliteDb().insert(TABLE_NAME, null, values) >= 0;
     }
 
     @Override

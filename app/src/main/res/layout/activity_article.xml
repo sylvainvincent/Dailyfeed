@@ -93,7 +93,6 @@
                 android:layout_height="wrap_content"
                 android:text="01/03/2016"/>
 
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -113,18 +112,30 @@
             android:visibility="visible"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_colorPressed="@color/colorAccent"
-            app:fab_icon="@drawable/ic_action_save"
-            app:fab_title="Sauvegarder" />
+            android:src="@drawable/ic_action_star_0"
+            app:fab_title="Ajouter au favoris" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_colorPressed="@color/colorAccent"
+            app:fab_addButtonColorNormal="@color/colorAccent"
+            app:fab_addButtonColorPressed="@color/colorAccent"
+            app:fab_addButtonPlusIconColor="@color/white"
+            app:fab_labelStyle="@style/fab_menu_labels_style"
             app:fab_icon="@drawable/ic_action_share"
             app:fab_title="Partager" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_icon="@drawable/ic_action_globe"
+            app:fab_title="Version web" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

@@ -27,6 +27,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
             KEY_CONTENT + " TEXT," +
             KEY_THUMBNAIL_LINK + " TEXT," +
             KEY_PUBLISHED_DATE + " TEXT," +
+            KEY_SOURCE_ID + " INTEGER," +
             "FOREIGN KEY(" + KEY_SOURCE_ID + ") REFERENCES " +
             SourceDAO.TABLE_NAME + "(" + SourceDAO.KEY_ID + "))";
 
@@ -37,13 +38,13 @@ public class ArticleDAO extends AbstractDAO<Article> {
     }
 
     @Override
-    public void add(Article article) {
+    public boolean add(Article article) {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, article.getmTitle());
         values.put(KEY_CONTENT,article.getmContent());
         values.put(KEY_SOURCE_ID, article.getmSourceId());
 
-        getSqliteDb().insert(TABLE_NAME, null, values);
+        return getSqliteDb().insert(TABLE_NAME, null, values) >= 0;
     }
 
     @Override

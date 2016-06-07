@@ -9,26 +9,27 @@ import android.database.sqlite.SQLiteDatabase;
  */
 public abstract class AbstractDAO<T> {
 
-    private DatabaseHandler databaseHandler;
-    private SQLiteDatabase sqLiteDatabase;
+    private DatabaseHandler mDatabaseHandler;
+    private SQLiteDatabase mSqLiteDatabase;
 
     public SQLiteDatabase getSqliteDb() {
-        return sqLiteDatabase;
+        return mSqLiteDatabase;
     }
 
     public AbstractDAO(Context context) {
-        this.databaseHandler = new DatabaseHandler(context);
+        mDatabaseHandler = new DatabaseHandler(context);
     }
+
     public SQLiteDatabase open(){
-        sqLiteDatabase = this.databaseHandler.getWritableDatabase();
-        return sqLiteDatabase;
+        mSqLiteDatabase = this.mDatabaseHandler.getWritableDatabase();
+        return mSqLiteDatabase;
     }
 
     public void close(){
-        sqLiteDatabase.close();
+        mSqLiteDatabase.close();
     }
 
-    public abstract void add(T object);
+    public abstract boolean add(T object);
     public abstract T get(int id);
     public abstract boolean update(int id, T object);
     public abstract boolean delete(int id, T object);

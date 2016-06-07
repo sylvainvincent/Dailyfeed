@@ -37,4 +37,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="edit_style">
+        <item name="android:lines">1</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:width">200dp</item>
+        <item name="android:background">@color/background_edit_text</item>
+        <item name="android:textColor">@color/text_color_edit_text</item>
+        <item name="android:textColorHint">@color/text_color_hint_edit_text</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
 </resources>
