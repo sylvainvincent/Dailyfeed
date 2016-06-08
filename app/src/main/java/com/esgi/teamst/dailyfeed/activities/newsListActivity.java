@@ -34,10 +34,6 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
         this.initViews();
-        ArrayList<Article> articleArrayList = new ArrayList<>();
-        //articleArrayList.add(new Article(1, "test", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
-        //articleArrayList.add(new Article(2, "bonjour", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
-        //mlistViewArticles.setAdapter(new ArticleAdapter(this, articleArrayList));
 
         articleList = new ArrayList<Article>();
 
@@ -51,7 +47,6 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
 
         mlistViewArticles.setAdapter(new ArticleAdapter(newsListActivity.this, articleList));
         mlistViewArticles.setOnItemClickListener(this);
-       // articleList = new ArrayList<Article>();
 
     }
 
