@@ -1,8 +1,12 @@
 package com.esgi.teamst.dailyfeed.xmlHandler;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListView;
 
+import com.esgi.teamst.dailyfeed.activities.newsListActivity;
+import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
 import com.esgi.teamst.dailyfeed.models.Article;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -17,44 +21,38 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tracysablon on 05/05/2016.
  */
 public class XMLParseHandler extends AsyncTask<String, Void, ArrayList<Article>> {
 
+    //Param entrée/progress/Result
     private ArrayList<Article> articles = null;
     private Article currentArticle = null;
     private Date articleDate;
     private InputStream in_s;
+    ListView mlistViewArticles;
+    Context context;
 
     public XMLParseHandler() {}
+    public XMLParseHandler(ListView mlistViewArticles,Context context) {
+        this.mlistViewArticles = mlistViewArticles;
+        this.context  = context;
+    }
 
     @Override
     protected ArrayList<Article> doInBackground(String... params) {
         //Perform loadXmlFeeds on a background thread
-        loadXmlFeeds(params[0]);
-        Log.d("Articles size doBack: ", String.valueOf(articles.size()));
-        return articles;
+        return loadXmlFeeds(params[0]);
     }
 
     @Override
     protected void onPostExecute(ArrayList<Article> articleResult) {
         //Run on the UI thread after doBackground
         Log.d("Articles size onPost: ", String.valueOf(articleResult.size()));
-        //create a date "formatter" (the date format we want)
-        //SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
-
-        //create a new String using the date format we want
-        //String frmDate = formatter.format(articles.get(0).getDate());
-        /*Log.d("Async Task is title: ",articles.get(0).getTitle());
-       for(int i = 0; i > articles.size(); i++){
-            Log.d("Async Task is title: ",articles.get(0).getTitle());
-            //Log.d("Async Task is date: ",articles.get(i).getDate());
-            //Log.d("Async Task is link: ",articles.get(i).getLink());
-
-        }*/
-
+        mlistViewArticles.setAdapter(new ArticleAdapter(context,articleResult));
     }
 
     private void parseXML(InputStream inputStream) throws XmlPullParserException,IOException {
@@ -123,9 +121,9 @@ public class XMLParseHandler extends AsyncTask<String, Void, ArrayList<Article>>
         try {
             in_s = downloadUrl(urlString);
             parseXML(in_s);
-        }catch (IOException e) {
-            e.printStackTrace();
         } catch (XmlPullParserException e) {
+            e.printStackTrace();
+        }catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (in_s != null) try {

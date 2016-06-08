@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;

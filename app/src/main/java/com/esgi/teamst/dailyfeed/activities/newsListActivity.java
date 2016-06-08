@@ -14,6 +14,7 @@ import com.esgi.teamst.dailyfeed.models.Article;
 import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -25,33 +26,24 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
 
     public static final String TAG = newsListActivity.class.getSimpleName();
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
+    public static final String FEED_URL_1 = "feeds.feedburner.com/Phonandroid";
+    public static final String FEED_URL_2 = "feeds.feedburner.com/topito/tip-top";
+    public static final String FEED_URL_3 = "feeds.feedburner.com/AndroidMtApplication";
 
-    ListView mlistViewArticles;
-    private List<Article> articleList;
+    ListView mlistViewArticlesMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_list);
         this.initViews();
-
-        articleList = new ArrayList<Article>();
-
-        try {
-            articleList = new XMLParseHandler().execute("http://feeds.feedburner.com/Phonandroid?format=xml").get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        mlistViewArticles.setAdapter(new ArticleAdapter(newsListActivity.this, articleList));
-        mlistViewArticles.setOnItemClickListener(this);
-
+        ArrayList<Article> articleArrayList = new ArrayList<>();
+        new XMLParseHandler(mlistViewArticlesMain,newsListActivity.this)
+                .execute("http://"+FEED_URL_1,"http://"+FEED_URL_2,"http://"+FEED_URL_3);
     }
 
     private void initViews(){
-        mlistViewArticles = (ListView) findViewById(R.id.list_articles);
+        mlistViewArticlesMain = (ListView) findViewById(R.id.list_articles);
     }
 
     @Override
