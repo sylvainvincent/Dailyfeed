@@ -11,5 +11,8 @@
 
     <string name="success_subscribe">Compte enregistré avec succès</string>
     <string name="error_subscribe">Email déjà utilisé</string>
+    <string name="error_email_is_not_valid">Email non valide</string>
+    <string name="error_email_or_password_are_incorrect">L\'email ou le mot de passe est incorrect</string>
+    <string name="error_text_is_not_alpha">Le nom et le prénom doivent contenir uniquement des lettres</string>
     <string name="error_empty_fields">Tous les champs sont obligatoires</string>
 </resources>

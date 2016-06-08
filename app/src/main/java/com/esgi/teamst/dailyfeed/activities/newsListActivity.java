@@ -14,7 +14,6 @@ import com.esgi.teamst.dailyfeed.models.Article;
 import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -39,7 +38,6 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         //articleArrayList.add(new Article(1, "test", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
         //articleArrayList.add(new Article(2, "bonjour", "test2", "http://img.bfmtv.com/ressources/img/logo/logo-01net-gris.png", new Date(), 1));
         //mlistViewArticles.setAdapter(new ArticleAdapter(this, articleArrayList));
-        //mlistViewArticles.setOnItemClickListener(this);       articleList = new ArrayList<Article>();
 
         articleList = new ArrayList<Article>();
 
@@ -52,6 +50,8 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         }
 
         mlistViewArticles.setAdapter(new ArticleAdapter(newsListActivity.this, articleList));
+        mlistViewArticles.setOnItemClickListener(this);
+       // articleList = new ArrayList<Article>();
 
     }
 

@@ -49,7 +49,6 @@ public class UserDAO extends AbstractDAO<User> {
     public User get(int id) {
         Cursor mCursor = getSqliteDb().query(true, TABLE_NAME, ALL_COLUMNS, KEY_ID + "=" + id,
                 null, null, null, null, null);
-
         if (mCursor != null) {
             mCursor.moveToFirst();
             return cursorToObject(mCursor);
@@ -88,7 +87,7 @@ public class UserDAO extends AbstractDAO<User> {
                         + "' AND " + KEY_PASSWORD + " = '" + password +"'",
                         null, null, null, null, null);
 
-        if (mCursor != null) {
+        if (mCursor.getCount() > 0) {
             mCursor.moveToFirst();
             return cursorToObject(mCursor);
         } else {

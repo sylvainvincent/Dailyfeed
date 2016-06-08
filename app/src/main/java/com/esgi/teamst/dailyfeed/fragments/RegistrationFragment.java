@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
+import com.esgi.teamst.dailyfeed.Util;
 import com.esgi.teamst.dailyfeed.dao.UserDAO;
 import com.esgi.teamst.dailyfeed.models.User;
 
@@ -66,12 +67,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.subscribe_button:
-                if(lastnameField.getText().toString().equals("")
-                        || firstnameField.getText().toString().equals("")
-                        || emailField.getText().toString().equals("")
-                        || passwordField.getText().toString().equals("")){
-                    Snackbar.make(frameFragment, getString(R.string.error_empty_fields),Snackbar.LENGTH_INDEFINITE).show();
-                }else {
+                if(isFormValid()){
                     User user = new User();
                     user.setmFirstName(emailField.getText().toString());
                     user.setmLastName(emailField.getText().toString());
@@ -89,5 +85,25 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                 }
                 break;
         }
+    }
+
+    private boolean isFormValid(){
+
+        boolean isValid = false;
+
+        if(lastnameField.getText().toString().equals("")
+                || firstnameField.getText().toString().equals("")
+                || emailField.getText().toString().equals("")
+                || passwordField.getText().toString().equals("")){
+            Snackbar.make(frameFragment, getString(R.string.error_empty_fields),Snackbar.LENGTH_INDEFINITE).show();
+        }else if(!Util.isEmailAddress(emailField.getText().toString())){
+            Snackbar.make(frameFragment, getString(R.string.error_email_is_not_valid),Snackbar.LENGTH_INDEFINITE).show();
+        }else if(!Util.isString(lastnameField.getText().toString()) || !Util.isString(lastnameField.getText().toString())){
+            Snackbar.make(frameFragment, getString(R.string.error_text_is_not_alpha),Snackbar.LENGTH_INDEFINITE).show();
+        }else{
+            isValid = true;
+        }
+
+        return isValid;
     }
 }
