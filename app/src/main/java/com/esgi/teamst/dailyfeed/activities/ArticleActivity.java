@@ -39,7 +39,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
-        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
+        articleId = getIntent().getIntExtra(NewsListActivity.EXTRA_ARTICLE_ID, -1);
         initView();
 
 
