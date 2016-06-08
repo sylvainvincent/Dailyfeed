@@ -25,9 +25,7 @@ public abstract class AbstractDAO<T> {
         return mSqLiteDatabase;
     }
 
-    public void close(){
-        mSqLiteDatabase.close();
-    }
+    public void close(){mDatabaseHandler.close();}
 
     public abstract boolean add(T object);
     public abstract T get(int id);

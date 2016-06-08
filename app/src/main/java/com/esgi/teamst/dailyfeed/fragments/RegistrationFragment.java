@@ -69,10 +69,10 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
             case R.id.subscribe_button:
                 if(isFormValid()){
                     User user = new User();
-                    user.setmFirstName(emailField.getText().toString());
-                    user.setmLastName(emailField.getText().toString());
+                    user.setmFirstName(firstnameField.getText().toString());
+                    user.setmLastName(lastnameField.getText().toString());
                     user.setmEmail(emailField.getText().toString());
-                    user.setPassword(emailField.getText().toString());
+                    user.setPassword(passwordField.getText().toString());
                     UserDAO userDAO = new UserDAO(getActivity());
                     userDAO.open();
                     boolean find = userDAO.add(user);

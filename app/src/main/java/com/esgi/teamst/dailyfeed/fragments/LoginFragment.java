@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment {
                         UserDAO userDAO = new UserDAO(getActivity());
                         try {
                             userDAO.open();
-                            User user = userDAO.search(emailField.getText().toString(), passwordField.getText().toString());
+                            User user = userDAO.get(emailField.getText().toString(), passwordField.getText().toString());
                             if (user != null) {
                                 mLoginFragmentCallback.connection(user.getmId());
                             }else{

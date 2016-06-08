@@ -3,6 +3,7 @@ package com.esgi.teamst.dailyfeed.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.esgi.teamst.dailyfeed.models.User;
 
@@ -10,6 +11,8 @@ import com.esgi.teamst.dailyfeed.models.User;
  * Created by sylvainvincent on 29/05/16.
  */
 public class UserDAO extends AbstractDAO<User> {
+
+    private static final String TAG = UserDAO.class.getSimpleName();
 
     public static final String TABLE_NAME = "user";
 
@@ -57,6 +60,21 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
+    public User get(String email, String password) {
+        Cursor mCursor = getSqliteDb().query(TABLE_NAME,
+                ALL_COLUMNS,
+                KEY_EMAIL + " = ? AND " + KEY_PASSWORD + " = ?",
+                new String[]{email, password}, null, null, null);
+
+        Log.i(TAG, "search: " + mCursor.getCount());
+        if (mCursor.getCount() > 0) {
+            mCursor.moveToFirst();
+            return cursorToObject(mCursor);
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public boolean update(int id, User user) {
         ContentValues values = new ContentValues();
@@ -74,6 +92,7 @@ public class UserDAO extends AbstractDAO<User> {
     @Override
     public User cursorToObject(Cursor cursor) {
         User user = new User();
+        Log.i(TAG, "cursorToObject: " + cursor.getColumnIndex(KEY_ID));
         user.setmId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         user.setmFirstName(cursor.getString(cursor.getColumnIndex(KEY_FIRSTNAME)));
         user.setmLastName(cursor.getString(cursor.getColumnIndex(KEY_LASTNAME)));
@@ -82,28 +101,5 @@ public class UserDAO extends AbstractDAO<User> {
         return user;
     }
 
-    public User search(String email, String password){
-        Cursor mCursor = getSqliteDb().query(true, TABLE_NAME, ALL_COLUMNS, KEY_EMAIL + " = '" + email
-                        + "' AND " + KEY_PASSWORD + " = '" + password +"'",
-                        null, null, null, null, null);
 
-        if (mCursor.getCount() > 0) {
-            mCursor.moveToFirst();
-            return cursorToObject(mCursor);
-        } else {
-            return null;
-        }
-    }
-
-    public boolean isExist(String email){
-        Cursor mCursor = getSqliteDb().query(true, TABLE_NAME, ALL_COLUMNS, KEY_EMAIL + " = '" + email
-                        + "'",
-                null, null, null, null, null);
-
-        if (mCursor.getCount() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
