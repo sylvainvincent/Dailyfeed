@@ -9,14 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.esgi.teamst.dailyfeed.R;
-import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
 import com.esgi.teamst.dailyfeed.models.Article;
 import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Guideline utilisé : https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md
@@ -30,7 +26,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
     public static final String FEED_URL_2 = "feeds.feedburner.com/topito/tip-top";
     public static final String FEED_URL_3 = "feeds.feedburner.com/AndroidMtApplication";
 
-    ListView mlistViewArticlesMain;
+    ListView mListViewArticlesMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +34,8 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         setContentView(R.layout.activity_news_list);
         this.initViews();
         ArrayList<Article> articleArrayList = new ArrayList<>();
-        new XMLParseHandler(mlistViewArticlesMain,newsListActivity.this)
+        new XMLParseHandler(mListViewArticlesMain,newsListActivity.this)
                 .execute("http://"+FEED_URL_1,"http://"+FEED_URL_2,"http://"+FEED_URL_3);
-    }
-
-    private void initViews(){
-        mlistViewArticlesMain = (ListView) findViewById(R.id.list_articles);
     }
 
     @Override
@@ -51,9 +43,13 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         if (parent.getId() == R.id.list_articles) {
             Log.i(TAG, "onItemClick: ");
             Article article = (Article) parent.getItemAtPosition(position);
-            Intent acticleActivityIntent = new Intent(newsListActivity.this, ArticleActivity.class);
-            acticleActivityIntent.putExtra(EXTRA_ARTICLE_ID,article.getmId());
-            startActivity(acticleActivityIntent);
+            Intent articleActivityIntent = new Intent(newsListActivity.this, ArticleActivity.class);
+            articleActivityIntent.putExtra(EXTRA_ARTICLE_ID,article.getmId());
+            startActivity(articleActivityIntent);
         }
+    }
+
+    private void initViews(){
+        mListViewArticlesMain = (ListView) findViewById(R.id.list_articles);
     }
 }

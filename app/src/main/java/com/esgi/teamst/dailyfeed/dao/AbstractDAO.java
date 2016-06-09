@@ -1,5 +1,6 @@
 package com.esgi.teamst.dailyfeed.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,7 +13,7 @@ public abstract class AbstractDAO<T> {
     private DatabaseHandler mDatabaseHandler;
     private SQLiteDatabase mSqLiteDatabase;
 
-    public SQLiteDatabase getSqliteDb() {
+    public SQLiteDatabase getSQLiteDb() {
         return mSqLiteDatabase;
     }
 
@@ -29,8 +30,9 @@ public abstract class AbstractDAO<T> {
 
     public abstract boolean add(T object);
     public abstract T get(int id);
-    public abstract boolean update(int id, T object);
-    public abstract boolean delete(int id, T object);
+    public abstract boolean update(T object);
+    public abstract boolean delete(T object);
     public abstract T cursorToObject(Cursor cursor);
+    protected abstract ContentValues objectToContentValues(T object);
 
 }

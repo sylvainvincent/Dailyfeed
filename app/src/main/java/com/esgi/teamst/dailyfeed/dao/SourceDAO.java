@@ -21,7 +21,8 @@ public class SourceDAO extends AbstractDAO<Source> {
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             KEY_NAME + " TEXT)";
 
-    public static final String[] ALL_COLUMNS = {KEY_ID, KEY_NAME};
+    public static final String[] ALL_COLUMNS = {KEY_ID,
+            KEY_NAME};
 
     public SourceDAO(Context context) {
         super(context);
@@ -29,18 +30,24 @@ public class SourceDAO extends AbstractDAO<Source> {
 
     @Override
     public boolean add(Source source) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, source.getmName());
-
-        return getSqliteDb().insert(TABLE_NAME, null, values) >= 0;
+        return getSQLiteDb().insert(TABLE_NAME,
+                null,
+                objectToContentValues(source)) >= 0;
     }
 
     @Override
     public Source get(int id) {
-        Cursor mCursor = getSqliteDb().query(true, TABLE_NAME, ALL_COLUMNS, KEY_ID + "=" + id,
-                null, null, null, null, null);
+        Cursor mCursor = getSQLiteDb().query(true,
+                TABLE_NAME,
+                ALL_COLUMNS,
+                KEY_ID + "=" + id,
+                null,
+                null,
+                null,
+                null,
+                null);
 
-        if (mCursor != null) {
+        if (mCursor.getCount() > 0) {
             mCursor.moveToFirst();
             return cursorToObject(mCursor);
         } else {
@@ -49,16 +56,18 @@ public class SourceDAO extends AbstractDAO<Source> {
     }
 
     @Override
-    public boolean update(int id, Source source) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_NAME, source.getmName());
-
-        return getSqliteDb().update(TABLE_NAME, values, KEY_ID + "=" + id, null) > 0;
+    public boolean update(Source source) {
+        return getSQLiteDb().update(TABLE_NAME,
+                objectToContentValues(source),
+                KEY_ID + "=" + source.getmId(),
+                null) > 0;
     }
 
     @Override
-    public boolean delete(int id, Source source) {
-        return getSqliteDb().delete(TABLE_NAME, KEY_ID + "=" + id, null) > 0;
+    public boolean delete(Source source) {
+        return getSQLiteDb().delete(TABLE_NAME,
+                KEY_ID + "=" + source.getmId(),
+                null) > 0;
     }
 
     @Override
@@ -69,5 +78,11 @@ public class SourceDAO extends AbstractDAO<Source> {
         return source;
     }
 
+    @Override
+    public ContentValues objectToContentValues(Source source) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, source.getmName());
+        return values;
+    }
 
 }

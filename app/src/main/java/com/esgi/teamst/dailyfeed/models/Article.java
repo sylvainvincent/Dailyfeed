@@ -13,16 +13,18 @@ public class Article {
     private String mArticleLink;
     private String mThumbnailLink;
     private String  mPublishedDate;
+    private boolean mIsFavorite;
     private int mSourceId;
 
     public Article() {}
 
-    public Article(int mId, String mTitle, String mContent, String mThumbnailLink, String mPublishedDate, int mSourceId) {
+    public Article(int mId, String mTitle, String mContent, String mThumbnailLink, String mPublishedDate,boolean isFavorite, int mSourceId) {
         this.mId = mId;
         this.mTitle = mTitle;
         this.mContent = mContent;
         this.mThumbnailLink = mThumbnailLink;
         this.mPublishedDate = mPublishedDate;
+        this.mIsFavorite = isFavorite;
         this.mSourceId = mSourceId;
     }
 
@@ -61,6 +63,12 @@ public class Article {
     }
     public void setmPublishedDate(String mPublishedDate) {
         this.mPublishedDate = mPublishedDate;
+    }
+    public boolean ismIsFavorite() {
+        return mIsFavorite;
+    }
+    public void setmIsFavorite(boolean mIsFavorite) {
+        this.mIsFavorite = mIsFavorite;
     }
     public String getmArticleLink() {return mArticleLink;}
     public void setmArticleLink(String mArticleLink) {this.mArticleLink = mArticleLink;}

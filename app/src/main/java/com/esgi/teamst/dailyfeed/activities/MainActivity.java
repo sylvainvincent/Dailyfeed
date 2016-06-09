@@ -20,29 +20,22 @@ import com.esgi.teamst.dailyfeed.fragments.RegistrationFragment;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,LoginFragment.LoginFragmentCallback {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    protected TextView mTextActionChange;
-    protected TextView mTitleMain;
-    private FrameLayout mFragmentMain;
-    private LoginFragment mLoginFragment;
     private RegistrationFragment mRegistrationFragment;
+    private LoginFragment mLoginFragment;
+    private TextView mTextActionChange;
+    private TextView mTitleMain;
     private boolean mChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
-        initView();
+        this.initView();
         mTextActionChange.setOnClickListener(this);
         mLoginFragment = new LoginFragment();
         mRegistrationFragment = new RegistrationFragment();
         getFragmentManager().beginTransaction().replace(R.id.frame_container_main, mLoginFragment).commit();
 
-    }
-
-    private void initView() {
-        mFragmentMain = (FrameLayout) findViewById(R.id.frame_container_main);
-        mTextActionChange = (TextView) findViewById(R.id.text_action_change);
-        mTitleMain = (TextView) findViewById(R.id.title_main);
     }
 
     @Override
@@ -72,5 +65,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void connection(int userId) {
         Log.i(TAG, "connection: réussie");
         startActivity(new Intent(MainActivity.this, newsListActivity.class));
+    }
+
+    private void initView() {
+        mTextActionChange = (TextView) findViewById(R.id.text_action_change);
+        mTitleMain = (TextView) findViewById(R.id.title_main);
     }
 }

@@ -67,7 +67,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.subscribe_button:
-                if(isFormValid()){
+               // todo ajouté isFormValid() dans la version final
+                if(true){
                     User user = new User();
                     user.setmFirstName(firstnameField.getText().toString());
                     user.setmLastName(lastnameField.getText().toString());

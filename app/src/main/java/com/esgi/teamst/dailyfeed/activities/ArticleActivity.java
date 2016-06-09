@@ -1,5 +1,6 @@
 package com.esgi.teamst.dailyfeed.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
+import com.esgi.teamst.dailyfeed.dao.ArticleDAO;
+import com.esgi.teamst.dailyfeed.models.Article;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -34,13 +37,20 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     protected FloatingActionButton fabWeb;
     protected CoordinatorLayout coordinatorEventDetail;
     int articleId;
+    Article article;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
-        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
         initView();
+        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
+        if(articleId != -1){
+            ArticleDAO articleDAO = new ArticleDAO(this);
+            articleDAO.open();
+            article = articleDAO.get(articleId);
+            articleDAO.close();
+        }
 
 
     }
@@ -51,6 +61,18 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.fab_save:
                 Picasso.with(this).load(R.drawable.ic_action_star_10).into(fabSave);
+                break;
+            case R.id.fab_web:
+                //// TODO: 09/06/16 intent vers un webview (site de l'article)
+                break;
+            case R.id.fab_share:
+                if(article != null) {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                }
                 break;
         }
     }
