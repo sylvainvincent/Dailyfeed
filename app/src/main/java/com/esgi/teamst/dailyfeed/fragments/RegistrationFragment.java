@@ -23,13 +23,13 @@ import com.esgi.teamst.dailyfeed.models.User;
 public class RegistrationFragment extends Fragment implements View.OnClickListener{
 
     protected View rootView;
-    protected EditText lastnameField;
-    protected EditText firstnameField;
-    protected EditText emailField;
-    protected EditText passwordField;
-    protected Button subscribeButton;
-    protected FrameLayout frameFragment;
-    private TextView textView;
+    protected EditText mLastNameField;
+    protected EditText mFirstNameField;
+    protected EditText mEmailField;
+    protected EditText mPasswordField;
+    protected Button mSubscribeButton;
+    protected FrameLayout mFrameFragment;
+    private RegistrationFragmentCallback registrationFragmentCallback;
 
     public static RegistrationFragment newInstance(String title) {
         RegistrationFragment fragment = new RegistrationFragment();
@@ -44,7 +44,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_registration, container, false);
         initView(rootView);
-        subscribeButton.setOnClickListener(this);
+        mSubscribeButton.setOnClickListener(this);
         return rootView;
     }
 
@@ -55,12 +55,12 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     }
 
     private void initView(View rootView) {
-        lastnameField = (EditText) rootView.findViewById(R.id.lastname_field);
-        firstnameField = (EditText) rootView.findViewById(R.id.firstname_field);
-        emailField = (EditText) rootView.findViewById(R.id.email_field);
-        passwordField = (EditText) rootView.findViewById(R.id.password_field);
-        subscribeButton = (Button) rootView.findViewById(R.id.subscribe_button);
-        frameFragment = (FrameLayout) rootView.findViewById(R.id.frame_fragment_registration);
+        mLastNameField = (EditText) rootView.findViewById(R.id.lastname_field);
+        mFirstNameField = (EditText) rootView.findViewById(R.id.firstname_field);
+        mEmailField = (EditText) rootView.findViewById(R.id.email_field);
+        mPasswordField = (EditText) rootView.findViewById(R.id.password_field);
+        mSubscribeButton = (Button) rootView.findViewById(R.id.subscribe_button);
+        mFrameFragment = (FrameLayout) rootView.findViewById(R.id.frame_fragment_registration);
     }
 
     @Override
@@ -70,18 +70,22 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                // todo ajouté isFormValid() dans la version final
                 if(true){
                     User user = new User();
-                    user.setmFirstName(firstnameField.getText().toString());
-                    user.setmLastName(lastnameField.getText().toString());
-                    user.setmEmail(emailField.getText().toString());
-                    user.setPassword(passwordField.getText().toString());
+                    user.setmFirstName(mFirstNameField.getText().toString());
+                    user.setmLastName(mLastNameField.getText().toString());
+                    user.setmEmail(mEmailField.getText().toString());
+                    user.setPassword(mPasswordField.getText().toString());
                     UserDAO userDAO = new UserDAO(getActivity());
                     userDAO.open();
                     boolean find = userDAO.add(user);
                     userDAO.close();
                     if(find) {
-                        Snackbar.make(frameFragment, getString(R.string.success_subscribe),Snackbar.LENGTH_INDEFINITE).show();
+                        Snackbar.make(mFrameFragment, getString(R.string.success_subscribe),Snackbar.LENGTH_INDEFINITE).show();
+                        mFirstNameField.setText("");
+                        mLastNameField.setText("");
+                        mEmailField.setText("");
+                        mPasswordField.setText("");
                     }else{
-                        Snackbar.make(frameFragment, getString(R.string.error_subscribe),Snackbar.LENGTH_INDEFINITE).show();
+                        Snackbar.make(mFrameFragment, getString(R.string.error_subscribe),Snackbar.LENGTH_INDEFINITE).show();
                     }
                 }
                 break;
@@ -92,19 +96,23 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
         boolean isValid = false;
 
-        if(lastnameField.getText().toString().equals("")
-                || firstnameField.getText().toString().equals("")
-                || emailField.getText().toString().equals("")
-                || passwordField.getText().toString().equals("")){
-            Snackbar.make(frameFragment, getString(R.string.error_empty_fields),Snackbar.LENGTH_INDEFINITE).show();
-        }else if(!Util.isEmailAddress(emailField.getText().toString())){
-            Snackbar.make(frameFragment, getString(R.string.error_email_is_not_valid),Snackbar.LENGTH_INDEFINITE).show();
-        }else if(!Util.isString(lastnameField.getText().toString()) || !Util.isString(lastnameField.getText().toString())){
-            Snackbar.make(frameFragment, getString(R.string.error_text_is_not_alpha),Snackbar.LENGTH_INDEFINITE).show();
+        if(mLastNameField.getText().toString().equals("")
+                || mFirstNameField.getText().toString().equals("")
+                || mEmailField.getText().toString().equals("")
+                || mPasswordField.getText().toString().equals("")){
+            Snackbar.make(mFrameFragment, getString(R.string.error_empty_fields),Snackbar.LENGTH_INDEFINITE).show();
+        }else if(!Util.isEmailAddress(mEmailField.getText().toString())){
+            Snackbar.make(mFrameFragment, getString(R.string.error_email_is_not_valid),Snackbar.LENGTH_INDEFINITE).show();
+        }else if(!Util.isString(mLastNameField.getText().toString()) || !Util.isString(mLastNameField.getText().toString())){
+            Snackbar.make(mFrameFragment, getString(R.string.error_text_is_not_alpha),Snackbar.LENGTH_INDEFINITE).show();
         }else{
             isValid = true;
         }
 
         return isValid;
+    }
+
+    public interface RegistrationFragmentCallback {
+        void switchFragment();
     }
 }

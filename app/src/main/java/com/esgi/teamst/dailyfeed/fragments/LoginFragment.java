@@ -97,10 +97,6 @@ public class LoginFragment extends Fragment {
         frameFragmentLogin = (FrameLayout) rootView.findViewById(R.id.frame_fragment_login);
     }
 
-    public interface LoginFragmentCallback {
-        void connection(int userId);
-    }
-
     private boolean isFormValid(){
 
         boolean isValid = false;
@@ -113,5 +109,9 @@ public class LoginFragment extends Fragment {
         }
 
         return isValid;
+    }
+
+    public interface LoginFragmentCallback {
+        void connection(int userId);
     }
 }

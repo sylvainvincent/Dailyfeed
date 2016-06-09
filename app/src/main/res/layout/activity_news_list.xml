@@ -40,14 +40,14 @@
         fab:fab_labelStyle="@style/fab_menu_labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_"
+            android:id="@+id/fab_disconnection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccent"
-            fab:fab_icon="@drawable/ic_action_add"
-            fab:fab_title="Supprimer" />
+            fab:fab_icon="@drawable/ic_action_export"
+            fab:fab_title="@string/label_disconnection" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/modify_event_button"
@@ -57,7 +57,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccent"
             fab:fab_icon="@drawable/ic_action_add"
-            fab:fab_title="Modifier" />
+            fab:fab_title="" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/join_event_button"
@@ -67,7 +67,7 @@
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorAccent"
             fab:fab_icon="@drawable/ic_action_add"
-            fab:fab_title="Rejoindre" />
+            fab:fab_title="" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
