@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LoginFragment mLoginFragment;
     private TextView mTextActionChange;
     private TextView mTitleMain;
-    private android.support.v7.widget.Toolbar toolbar;
+    private Toolbar toolbar;
     private boolean mLoginFragmentIsForeground = false;
 
 
@@ -37,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLoginFragment = new LoginFragment();
         mRegistrationFragment = new RegistrationFragment();
         getFragmentManager().beginTransaction().replace(R.id.frame_container_main, mLoginFragment).commit();
-
     }
 
     @Override
@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         mTextActionChange = (TextView) findViewById(R.id.text_action_change);
         mTitleMain = (TextView) findViewById(R.id.title_main);
-        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private void changeFragment(){

@@ -25,8 +25,8 @@ public class UserDAO extends AbstractDAO<User> {
             TABLE_NAME + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             KEY_FIRST_NAME + " TEXT," +
-            KEY_LAST_NAME + " TEXT," +
-            KEY_EMAIL + " TEXT UNIQUE," +
+            KEY_LAST_NAME + " TEXT UNIQUE," +
+            KEY_EMAIL + " TEXT," +
             KEY_PASSWORD + " TEXT)";
 
     public static final String[] ALL_COLUMNS = {KEY_ID,
@@ -34,7 +34,6 @@ public class UserDAO extends AbstractDAO<User> {
             KEY_LAST_NAME,
             KEY_EMAIL,
             KEY_PASSWORD};
-
 
     public UserDAO(Context context) {
         super(context);
