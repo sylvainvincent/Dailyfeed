@@ -1,6 +1,7 @@
 package com.esgi.teamst.dailyfeed.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.Util;
@@ -29,7 +29,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     protected EditText mPasswordField;
     protected Button mSubscribeButton;
     protected FrameLayout mFrameFragment;
-    private RegistrationFragmentCallback registrationFragmentCallback;
+    private RegistrationFragmentCallback mRegistrationFragmentCallback;
 
     public static RegistrationFragment newInstance(String title) {
         RegistrationFragment fragment = new RegistrationFragment();
@@ -84,12 +84,28 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                         mLastNameField.setText("");
                         mEmailField.setText("");
                         mPasswordField.setText("");
+                        mRegistrationFragmentCallback.switchFragment();
                     }else{
                         Snackbar.make(mFrameFragment, getString(R.string.error_subscribe),Snackbar.LENGTH_INDEFINITE).show();
                     }
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if(context instanceof RegistrationFragmentCallback){
+            mRegistrationFragmentCallback = (RegistrationFragmentCallback) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mRegistrationFragmentCallback = null;
     }
 
     private boolean isFormValid(){
