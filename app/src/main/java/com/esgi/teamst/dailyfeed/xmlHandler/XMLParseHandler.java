@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
 
-import com.esgi.teamst.dailyfeed.activities.newsListActivity;
 import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
 import com.esgi.teamst.dailyfeed.models.Article;
 
@@ -16,12 +15,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.InputStream;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by tracysablon on 05/05/2016.

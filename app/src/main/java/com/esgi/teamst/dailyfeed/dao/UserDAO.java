@@ -6,6 +6,9 @@ import android.database.Cursor;
 
 import com.esgi.teamst.dailyfeed.models.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sylvainvincent on 29/05/16.
  */
@@ -48,7 +51,7 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public User get(int id) {
-        Cursor mCursor = getSQLiteDb().query(true,
+        Cursor cursor = getSQLiteDb().query(true,
                 TABLE_NAME,
                 ALL_COLUMNS,
                 KEY_ID + "=" + id,
@@ -58,16 +61,16 @@ public class UserDAO extends AbstractDAO<User> {
                 null,
                 null);
 
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-            return cursorToObject(mCursor);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            return cursorToObject(cursor);
         } else {
             return null;
         }
     }
 
     public User get(String email, String password) {
-        Cursor mCursor = getSQLiteDb().query(TABLE_NAME,
+        Cursor cursor = getSQLiteDb().query(TABLE_NAME,
                 ALL_COLUMNS,
                 KEY_EMAIL + " = ? AND " + KEY_PASSWORD + " = ?",
                 new String[]{email, password},
@@ -75,12 +78,33 @@ public class UserDAO extends AbstractDAO<User> {
                 null,
                 null);
 
-        if (mCursor.getCount() > 0) {
-            mCursor.moveToFirst();
-            return cursorToObject(mCursor);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            return cursorToObject(cursor);
         } else {
             return null;
         }
+    }
+
+    public List<String> getAllEmail(){
+        List<String> emailList = null;
+        Cursor cursor = getSQLiteDb().query(TABLE_NAME,
+                ALL_COLUMNS,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if (cursor.getCount() > 0) {
+            emailList = new ArrayList<>();
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                emailList.add(cursorToObject(cursor).getmEmail());
+                cursor.moveToNext();
+            }
+        }
+        return emailList;
     }
 
     @Override

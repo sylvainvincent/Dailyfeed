@@ -8,14 +8,17 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.esgi.teamst.dailyfeed.R;
-import com.esgi.teamst.dailyfeed.Util;
 import com.esgi.teamst.dailyfeed.dao.UserDAO;
 import com.esgi.teamst.dailyfeed.models.User;
+
+import java.util.List;
 
 /**
  * Created by sylvainvincent on 29/05/16.
@@ -24,8 +27,8 @@ public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
     private View rootView;
-    private EditText emailField;
-    private EditText passwordField;
+    private AutoCompleteTextView mAutoCompleteEmail;
+    private EditText mEditPassword;
     private FrameLayout frameFragmentLogin;
     private Button mButtonLogin;
     private LoginFragmentCallback mLoginFragmentCallback;
@@ -43,6 +46,15 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
         initView(rootView);
+        UserDAO userDAO = new UserDAO(getActivity());
+        userDAO.open();
+        List<String> emails = userDAO.getAllEmail();
+        userDAO.close();
+        if(emails != null){
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,emails);
+            mAutoCompleteEmail.setAdapter(adapter);
+            mAutoCompleteEmail.setThreshold(1); // Minimum de lettre pour afficher les suggestions
+        }
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +63,7 @@ public class LoginFragment extends Fragment {
                         UserDAO userDAO = new UserDAO(getActivity());
                         try {
                             userDAO.open();
-                            User user = userDAO.get(emailField.getText().toString(), passwordField.getText().toString());
+                            User user = userDAO.get(mAutoCompleteEmail.getText().toString(), mEditPassword.getText().toString());
                             if (user != null) {
                                 mLoginFragmentCallback.connection(user.getmId());
                             }else{
@@ -91,8 +103,8 @@ public class LoginFragment extends Fragment {
     }
 
     private void initView(View rootView) {
-        emailField = (EditText) rootView.findViewById(R.id.email_field);
-        passwordField = (EditText) rootView.findViewById(R.id.password_field);
+        mAutoCompleteEmail = (AutoCompleteTextView) rootView.findViewById(R.id.autocomplete_email);
+        mEditPassword = (EditText) rootView.findViewById(R.id.edit_password);
         mButtonLogin = (Button) rootView.findViewById(R.id.button_login);
         frameFragmentLogin = (FrameLayout) rootView.findViewById(R.id.frame_fragment_login);
     }
@@ -101,8 +113,8 @@ public class LoginFragment extends Fragment {
 
         boolean isValid = false;
 
-        if(emailField.getText().toString().equals("")
-                || passwordField.getText().toString().equals("")){
+        if(mAutoCompleteEmail.getText().toString().equals("")
+                || mEditPassword.getText().toString().equals("")){
             Snackbar.make(frameFragmentLogin, getString(R.string.error_empty_fields),Snackbar.LENGTH_INDEFINITE).show();
         }else{
             isValid = true;

@@ -57,8 +57,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     private void initView(View rootView) {
         mLastNameField = (EditText) rootView.findViewById(R.id.lastname_field);
         mFirstNameField = (EditText) rootView.findViewById(R.id.firstname_field);
-        mEmailField = (EditText) rootView.findViewById(R.id.email_field);
-        mPasswordField = (EditText) rootView.findViewById(R.id.password_field);
+        mEmailField = (EditText) rootView.findViewById(R.id.autocomplete_email);
+        mPasswordField = (EditText) rootView.findViewById(R.id.edit_password);
         mSubscribeButton = (Button) rootView.findViewById(R.id.subscribe_button);
         mFrameFragment = (FrameLayout) rootView.findViewById(R.id.frame_fragment_registration);
     }
