@@ -23,7 +23,7 @@
             android:background="@color/colorPrimary"
             android:elevation="4dp" />-->
 
-        <include layout="@layout/toolbar" />
+
 
     </android.support.design.widget.AppBarLayout>
 

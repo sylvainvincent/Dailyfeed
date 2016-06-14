@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -34,9 +35,10 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         super.setContentView(R.layout.activity_news_list);
         this.initView();
         ArrayList<Article> articleArrayList = new ArrayList<>();
-        /*new XMLParseHandler(mListViewArticlesMain, newsListActivity.this)
+        new XMLParseHandler(mListViewArticlesMain, newsListActivity.this)
                 .execute("http://" + FEED_URL_1, "http://" + FEED_URL_2, "http://" + FEED_URL_3);
-        initView();*/
+        initView();
+        mListViewArticlesMain.setOnItemClickListener(this);
     }
 
     @Override

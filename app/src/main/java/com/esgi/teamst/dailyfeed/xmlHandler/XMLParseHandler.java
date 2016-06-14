@@ -33,9 +33,10 @@ public class XMLParseHandler extends AsyncTask<String, Void, ArrayList<Article>>
     Context context;
 
     public XMLParseHandler() {}
-    public XMLParseHandler(Context context) {
-        this.context  = context;
-    }
+    public XMLParseHandler(ListView mlistViewArticles,Context context) {
+                this.mlistViewArticles = mlistViewArticles;
+                this.context  = context;
+            }
 
     @Override
     protected ArrayList<Article> doInBackground(String... params) {
