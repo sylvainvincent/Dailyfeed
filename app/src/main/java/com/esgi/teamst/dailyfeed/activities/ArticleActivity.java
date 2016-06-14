@@ -45,7 +45,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
         initView();
-        articleId = getIntent().getIntExtra(NewsListActivity.EXTRA_ARTICLE_ID, -1);
+        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
         if(articleId != -1){
             ArticleDAO articleDAO = new ArticleDAO(this);
             articleDAO.open();
