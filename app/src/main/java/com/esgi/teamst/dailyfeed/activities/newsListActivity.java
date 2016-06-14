@@ -27,7 +27,6 @@ public class NewsListActivity extends AppCompatActivity implements AdapterView.O
     public static final String FEED_URL_2 = "feeds.feedburner.com/topito/tip-top";
     public static final String FEED_URL_3 = "feeds.feedburner.com/AndroidMtApplication";
     protected FloatingActionButton fabDisconnection;
-
     ListView mListViewArticlesMain;
 
     @Override
@@ -36,9 +35,9 @@ public class NewsListActivity extends AppCompatActivity implements AdapterView.O
         super.setContentView(R.layout.activity_news_list);
         this.initView();
         ArrayList<Article> articleArrayList = new ArrayList<>();
-        new XMLParseHandler(mListViewArticlesMain, NewsListActivity.this)
+        /*new XMLParseHandler(mListViewArticlesMain, NewsListActivity.this)
                 .execute("http://" + FEED_URL_1, "http://" + FEED_URL_2, "http://" + FEED_URL_3);
-        initView();
+        initView();*/
     }
 
     @Override

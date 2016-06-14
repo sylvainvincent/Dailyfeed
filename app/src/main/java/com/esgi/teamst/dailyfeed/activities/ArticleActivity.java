@@ -39,6 +39,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     int articleId;
     Article article;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
