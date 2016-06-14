@@ -19,9 +19,9 @@ import java.util.ArrayList;
  * Guideline utilisé : https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md
  * + Idiomes : http://feanorin.developpez.com/tutoriels/android/idiomes/
  */
-public class newsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class NewsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    public static final String TAG = newsListActivity.class.getSimpleName();
+    public static final String TAG = NewsListActivity.class.getSimpleName();
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
     public static final String FEED_URL_1 = "feeds.feedburner.com/Phonandroid";
     public static final String FEED_URL_2 = "feeds.feedburner.com/topito/tip-top";
@@ -36,7 +36,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         super.setContentView(R.layout.activity_news_list);
         this.initView();
         ArrayList<Article> articleArrayList = new ArrayList<>();
-        new XMLParseHandler(mListViewArticlesMain, newsListActivity.this)
+        new XMLParseHandler(mListViewArticlesMain, NewsListActivity.this)
                 .execute("http://" + FEED_URL_1, "http://" + FEED_URL_2, "http://" + FEED_URL_3);
         initView();
     }
@@ -46,7 +46,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         if (parent.getId() == R.id.list_articles) {
             Log.i(TAG, "onItemClick: ");
             Article article = (Article) parent.getItemAtPosition(position);
-            Intent articleActivityIntent = new Intent(newsListActivity.this, ArticleActivity.class);
+            Intent articleActivityIntent = new Intent(NewsListActivity.this, ArticleActivity.class);
             articleActivityIntent.putExtra(EXTRA_ARTICLE_ID, article.getmId());
             startActivity(articleActivityIntent);
         }

@@ -33,8 +33,7 @@ public class XMLParseHandler extends AsyncTask<String, Void, ArrayList<Article>>
     Context context;
 
     public XMLParseHandler() {}
-    public XMLParseHandler(ListView mlistViewArticles,Context context) {
-        this.mlistViewArticles = mlistViewArticles;
+    public XMLParseHandler(Context context) {
         this.context  = context;
     }
 

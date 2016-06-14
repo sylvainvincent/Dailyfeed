@@ -6,5 +6,6 @@
     app:popupTheme="@style/AppTheme.PopupOverlay"
     app:titleTextColor="@color/white"
     android:background="@color/colorPrimary"
+    app:contentInsetStart="?actionBarItemBackground"
     app:title="@string/app_name"
     android:elevation="5dp" />
