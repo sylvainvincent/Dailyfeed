@@ -77,7 +77,7 @@ public class ArticleAdapter extends BaseAdapter {
             //Source source;
             Log.d("ART_TITLE", article.getmTitle());
             viewHolder.mArticleTitle.setText(article.getmTitle());
-            //viewHolder.mArticleSource.setText(sources.get(article.getmSourceId()).getmName());
+            viewHolder.mArticleSource.setText(sources.get(article.getmSourceId()).getmName());
             //Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
         }
 
