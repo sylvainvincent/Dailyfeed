@@ -1,6 +1,7 @@
 package com.esgi.teamst.dailyfeed.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.widget.ListView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.xmlHandler.DBArticleHandler;
+import com.esgi.teamst.dailyfeed.xmlHandler.DisplayListHandler;
 import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -23,22 +26,30 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
 
     public static final String TAG = newsListActivity.class.getSimpleName();
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
-    public static final String FEED_URL_1 = "feeds.feedburner.com/Phonandroid";
-    public static final String FEED_URL_2 = "feeds.feedburner.com/topito/tip-top";
-    public static final String FEED_URL_3 = "feeds.feedburner.com/AndroidMtApplication";
     protected FloatingActionButton fabDisconnection;
     ListView mListViewArticlesMain;
+    SharedPreferences prefs = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_news_list);
         this.initView();
-        ArrayList<Article> articleArrayList = new ArrayList<>();
-        new XMLParseHandler(mListViewArticlesMain, newsListActivity.this)
-                .execute("http://" + FEED_URL_1, "http://" + FEED_URL_2, "http://" + FEED_URL_3);
-        initView();
-        mListViewArticlesMain.setOnItemClickListener(this);
+        prefs = getSharedPreferences("com.esgi.teamst.dailyfeed", MODE_PRIVATE);
+        //new DisplayListHandler(mListViewArticlesMain, newsListActivity.this).execute();
+        new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /*if (prefs.getBoolean("firstrun", true)) {
+            // Do first run stuff here then set 'firstrun' as false
+            new XMLParseHandler(mListViewArticlesMain, newsListActivity.this).execute();
+            // using the following line to edit/commit prefs
+            prefs.edit().putBoolean("firstrun", false).commit();
+        }*/
     }
 
     @Override

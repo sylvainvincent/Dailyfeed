@@ -64,7 +64,7 @@ public class Article {
     public void setmPublishedDate(String mPublishedDate) {
         this.mPublishedDate = mPublishedDate;
     }
-    public boolean ismIsFavorite() {
+    public boolean getmIsFavorite() {
         return mIsFavorite;
     }
     public void setmIsFavorite(boolean mIsFavorite) {

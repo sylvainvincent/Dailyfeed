@@ -7,9 +7,9 @@ public class Source {
 
     private int mId;
     private String mName;
+    private String mUrl;
 
-    public Source() {
-    }
+    public Source() {}
 
     public int getmId() {
         return mId;
@@ -26,4 +26,9 @@ public class Source {
     public void setmName(String name) {
         mName = name;
     }
+
+    public String getmUrl() { return mUrl; }
+
+    public void setmUrl(String mUrl) { this.mUrl = mUrl; }
+
 }

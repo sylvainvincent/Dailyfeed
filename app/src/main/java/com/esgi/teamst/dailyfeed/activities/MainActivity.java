@@ -3,7 +3,9 @@ package com.esgi.teamst.dailyfeed.activities;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLoginFragment = new LoginFragment();
         mRegistrationFragment = new RegistrationFragment();
         getFragmentManager().beginTransaction().replace(R.id.frame_container_main, mLoginFragment).commit();
+
     }
 
     @Override

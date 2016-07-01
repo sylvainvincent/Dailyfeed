@@ -3,8 +3,14 @@ package com.esgi.teamst.dailyfeed.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.esgi.teamst.dailyfeed.models.Article;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by sylvainvincent on 05/05/16.
@@ -25,9 +31,9 @@ public class ArticleDAO extends AbstractDAO<Article> {
             TABLE_NAME + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             KEY_TITLE + " TEXT," +
+            KEY_PUBLISHED_DATE + " TEXT," +
             KEY_CONTENT + " TEXT," +
             KEY_THUMBNAIL_LINK + " TEXT," +
-            KEY_PUBLISHED_DATE + " TEXT," +
             KEY_IS_FAVORITE + " INTEGER," +
             KEY_SOURCE_ID + " INTEGER," +
             "FOREIGN KEY(" + KEY_SOURCE_ID + ") REFERENCES " +
@@ -72,6 +78,30 @@ public class ArticleDAO extends AbstractDAO<Article> {
         }
     }
 
+    public ArrayList<Article> getAllArticles (){
+        ArrayList<Article> articlesList = null;
+        Cursor cursor = getSQLiteDb().query(TABLE_NAME,
+                ALL_COLUMNS,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if (cursor.getCount() > 0) {
+            articlesList = new ArrayList<>();
+            cursor.moveToFirst();
+            while(!cursor.isAfterLast()){
+                articlesList.add(cursorToObject(cursor));
+                cursor.moveToNext();
+            }
+
+            Log.d("ARTICLE GET ALL LENGTH", String.valueOf(articlesList.size()));
+        }
+
+        return articlesList;
+    }
+
     @Override
     public boolean update(Article article) {
         return getSQLiteDb().update(TABLE_NAME,
@@ -105,11 +135,15 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public ContentValues objectToContentValues(Article article) {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, article.getmTitle());
-        values.put(KEY_CONTENT,article.getmContent());
-        values.put(KEY_THUMBNAIL_LINK,article.getmContent());
-        values.put(KEY_PUBLISHED_DATE,article.getmContent());
-        values.put(KEY_IS_FAVORITE,article.getmContent());
+        Log.d("ARTICLE INSERTED DB", article.getmTitle());
+        values.put(KEY_PUBLISHED_DATE, article.getmPublishedDate());
+        Log.d("ARTICLE INSERTED DB", article.getmPublishedDate());
+        values.put(KEY_CONTENT, article.getmContent());
+        values.put(KEY_THUMBNAIL_LINK, article.getmArticleLink());
+        values.put(KEY_IS_FAVORITE,article.getmIsFavorite());
+        Log.d("ARTICLE INSERTED DB", String.valueOf(article.getmIsFavorite()));
         values.put(KEY_SOURCE_ID, article.getmSourceId());
+        Log.d("ARTICLE INSERTED DB", String.valueOf(article.getmSourceId()));
         return values;
     }
 
