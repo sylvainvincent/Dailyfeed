@@ -17,7 +17,10 @@ import com.esgi.teamst.dailyfeed.fragments.LoginFragment;
 import com.esgi.teamst.dailyfeed.fragments.RegistrationFragment;
 
 /**
- * Created by sylvainvincent on 29/05/16.
+ *
+ * Guideline utilisé : https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md
+ *
+ * + Idiomes : http://feanorin.developpez.com/tutoriels/android/idiomes/
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,LoginFragment.LoginFragmentCallback,RegistrationFragment.RegistrationFragmentCallback {
 

@@ -7,10 +7,7 @@ import android.database.Cursor;
 import com.esgi.teamst.dailyfeed.models.Source;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by sylvainvincent on 05/05/16.
@@ -88,9 +85,9 @@ public class SourceDAO extends AbstractDAO<Source> {
             cursor.moveToFirst();
             while(!cursor.isAfterLast()) {
                 Source source = new Source();
-                source.setmUrl(cursorToObject(cursor).getmUrl());
-                source.setmId(cursorToObject(cursor).getmId());
-                source.setmName(cursorToObject(cursor).getmName());
+                source.setUrl(cursorToObject(cursor).getUrl());
+                source.setId(cursorToObject(cursor).getId());
+                source.setName(cursorToObject(cursor).getName());
                 cursor.moveToNext();
                 sourceList.add(source);
             }
@@ -102,30 +99,30 @@ public class SourceDAO extends AbstractDAO<Source> {
     public boolean update(Source source) {
         return getSQLiteDb().update(TABLE_NAME,
                 objectToContentValues(source),
-                KEY_ID + "=" + source.getmId(),
+                KEY_ID + "=" + source.getId(),
                 null) > 0;
     }
 
     @Override
     public boolean delete(Source source) {
         return getSQLiteDb().delete(TABLE_NAME,
-                KEY_ID + "=" + source.getmId(),
+                KEY_ID + "=" + source.getId(),
                 null) > 0;
     }
 
     @Override
     public Source cursorToObject(Cursor cursor) {
         Source source = new Source();
-        source.setmId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-        source.setmName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
-        source.setmUrl(cursor.getString(cursor.getColumnIndex(KEY_URL)));
+        source.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+        source.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+        source.setUrl(cursor.getString(cursor.getColumnIndex(KEY_URL)));
         return source;
     }
 
     @Override
     public ContentValues objectToContentValues(Source source) {
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, source.getmName());
+        values.put(KEY_NAME, source.getName());
         return values;
     }
 

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.esgi.teamst.dailyfeed.dao.UserDAO;
 
 /**
- * Created by sylvainvincent on 12/06/16.
+ *
  */
 public class DashboardActivity extends Activity {
 

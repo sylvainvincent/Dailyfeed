@@ -11,24 +11,24 @@ public class Source {
 
     public Source() {}
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int id) {
+    public void setId(int id) {
         mId = id;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String name) {
+    public void setName(String name) {
         mName = name;
     }
 
-    public String getmUrl() { return mUrl; }
+    public String getUrl() { return mUrl; }
 
-    public void setmUrl(String mUrl) { this.mUrl = mUrl; }
+    public void setUrl(String mUrl) { this.mUrl = mUrl; }
 
 }

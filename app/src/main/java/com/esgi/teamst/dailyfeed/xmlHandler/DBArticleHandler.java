@@ -38,7 +38,8 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
 
         for (Article article : articles) {
             boolean articleFav = false;
-            article.setmIsFavorite(articleFav);
+            article.setFavorite(
+                    articleFav);
             boolean find = articleDAO.add(article);
             if(find) {
                 Log.d("ARTICLE INSERTED","OK");

@@ -1,19 +1,21 @@
 <resources>
     <string name="app_name">Dailyfeed</string>
-    <string name="connection_error">Erreur de connection. Impossible de charger le contenu.</string>
-    <string name="xml_error">Error de parsing XML.</string>
+
     <string name="action_to_subscription">Pas encore de compte ? S\'incrire ici.</string>
     <string name="action_to_login">Vous avez un compte ? Se connecter ici.</string>
     <string name="action_subscribe">S\'inscrire</string>
+
     <string name="label_disconnection">Déconnexion</string>
 
     <string name="title_login">Connectez vous</string>
     <string name="title_subscription">Inscription</string>
 
     <string name="success_subscribe">Compte enregistré avec succès</string>
+
     <string name="error_subscribe">Email déjà utilisé</string>
     <string name="error_email_is_not_valid">Email non valide</string>
     <string name="error_email_or_password_are_incorrect">L\'email ou le mot de passe est incorrect</string>
     <string name="error_text_is_not_alpha">Le nom et le prénom doivent contenir uniquement des lettres</string>
     <string name="error_empty_fields">Tous les champs sont obligatoires</string>
+    <string name="error_article_url_is_not_exist">L\'adresse de l\'article est introuvable</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.esgi.teamst.dailyfeed;
+package com.esgi.teamst.dailyfeed.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

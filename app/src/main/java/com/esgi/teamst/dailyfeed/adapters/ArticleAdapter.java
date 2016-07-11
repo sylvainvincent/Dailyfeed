@@ -29,15 +29,15 @@ import java.util.List;
  */
 public class ArticleAdapter extends BaseAdapter {
 
+    private static final String TAG = ArticleAdapter.class.getSimpleName();
     private List<Article> mArticleArrayList;
     private Context mContext;
-    private  List<Source> msources;
-
+    private  List<Source> mSources;
 
     public ArticleAdapter(Context context, List<Article> articleArrayList, List<Source> sources){
         mContext = context;
         mArticleArrayList = articleArrayList;
-        msources = sources;
+        mSources = sources;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ArticleAdapter extends BaseAdapter {
             convertView = ((Activity) mContext).getLayoutInflater().inflate(R.layout.item_article,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.mArticleSource = (TextView) convertView.findViewById(R.id.text_article_source);
-            //viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
+            viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
             viewHolder.mArticleTitle = (TextView) convertView.findViewById(R.id.text_article_title);
 
             convertView.setTag(viewHolder);
@@ -75,10 +75,14 @@ public class ArticleAdapter extends BaseAdapter {
         Article article = mArticleArrayList.get(position);
         if(article != null){
             //Source source;
-            Log.d("ART_TITLE", article.getmTitle());
-            viewHolder.mArticleTitle.setText(article.getmTitle());
-            viewHolder.mArticleSource.setText(msources.get(article.getmSourceId()-1).getmName());
-            //Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
+            Log.d("ARTICLE", article.toString());
+            viewHolder.mArticleTitle.setText(article.getTitle());
+            viewHolder.mArticleSource.setText(mSources.get(article.getSourceId()-1).getName());
+            if(article.getThumbnailLink() != null){
+                Picasso.with(mContext).load(article.getThumbnailLink()).into(viewHolder.mArticleImage);
+            }else{
+                Picasso.with(mContext).load(R.drawable.article_picture).into(viewHolder.mArticleImage);
+            }
         }
 
         return convertView;
