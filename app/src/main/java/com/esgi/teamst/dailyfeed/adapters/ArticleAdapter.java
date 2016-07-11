@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.models.Article;
 import com.esgi.teamst.dailyfeed.models.Source;
-import com.esgi.teamst.dailyfeed.Util;
+import com.esgi.teamst.dailyfeed.util.Util;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -76,10 +76,10 @@ public class ArticleAdapter extends BaseAdapter {
         Article article = mArticleArrayList.get(position);
         if(article != null){
             //Source source;
-            Log.d("ART_TITLE", article.getmTitle());
-            viewHolder.mArticleTitle.setText(article.getmTitle());
-            viewHolder.mArticleSource.setText(msources.get(article.getmSourceId()-1).getmName());
-            viewHolder.mArticleDate.setText(new Util().dateDiff(article.getmPublishedDate()));
+            Log.d("ART_TITLE", article.getTitle());
+            viewHolder.mArticleTitle.setText(article.getTitle());
+            viewHolder.mArticleSource.setText(msources.get(article.getSourceId()-1).getName());
+            viewHolder.mArticleDate.setText(new Util().dateDiff(article.getPublishedDate()));
             if(article.getThumbnailLink() != null){
                 Picasso.with(mContext).load(article.getThumbnailLink()).into(viewHolder.mArticleImage);
             }else{
