@@ -1,5 +1,7 @@
 package com.esgi.teamst.dailyfeed;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -56,13 +58,43 @@ public class Util {
     /**
      * Comparaison de deux dates
      */
-    public static Date compareDates (String artDate){
-        Calendar today = Calendar.getInstance();
-        Calendar articleDate = Calendar.getInstance();
-        Date formatArtDate = formatStringToDate(artDate);
-        articleDate.setTime(formatArtDate);
-        long diff = today.getTimeInMillis() - articleDate.getTimeInMillis();
+    public static String dateDiff (String artDate){
+        //Calendar today = Calendar.getInstance();
+        //Calendar articleDate = Calendar.getInstance();
+        Date formatArticle = formatStringToDate(artDate);
+        //articleDate.setTime(formatArticle);
+        /** The date at the end of the last century */
+        Date d1 = formatArticle;
 
-        return null;
+        /** Today's date */
+        Date today = new Date();
+
+        // Get msec from each, and subtract.
+        long diff = today.getTime() - d1.getTime();
+
+        long diffSeconds = diff / 1000 % 60;
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000) % 24;
+        long diffDays = diff / (24 * 60 * 60 * 1000);
+
+        String dateDiff = "";
+
+        if (diffDays > 0){
+            System.out.print(diffDays + " days, ");
+            dateDiff = diffDays + "j";
+        }
+        else if (diffHours > 0) {
+            System.out.print(diffHours + " hours, ");
+            dateDiff = diffHours + "h";
+
+        }
+        else if (diffMinutes > 0) {
+            System.out.print(diffMinutes + " minutes");
+            dateDiff += " "+diffMinutes + "min";
+        }
+
+        Log.d("diffDate" , dateDiff);
+
+        return dateDiff;
     }
 }
