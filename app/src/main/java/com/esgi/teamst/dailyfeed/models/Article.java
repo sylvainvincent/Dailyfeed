@@ -8,7 +8,7 @@ public class Article {
     private int mId;
     private String mTitle;
     private String mContent;
-    private String mArticleLink;
+    private String mArticleUrl;
     private String mThumbnailLink;
     private String mPublishedDate;
     private boolean mFavorite;
@@ -17,14 +17,14 @@ public class Article {
     public Article() {}
 
     public Article(int id, String title, String content, String articleLink, String thumbnailLink, String publishedDate, boolean favorite, int sourceId) {
-        this.mId = id;
-        this.mTitle = title;
-        this.mContent = content;
-        this.mArticleLink = articleLink;
-        this.mThumbnailLink = thumbnailLink;
-        this.mPublishedDate = publishedDate;
-        this.mFavorite = favorite;
-        this.mSourceId = sourceId;
+        mId = id;
+        mTitle = title;
+        mContent = content;
+        mArticleUrl = articleLink;
+        mThumbnailLink = thumbnailLink;
+        mPublishedDate = publishedDate;
+        mFavorite = favorite;
+        mSourceId = sourceId;
     }
 
     public int getId() {
@@ -51,12 +51,12 @@ public class Article {
         this.mContent = content;
     }
 
-    public String getArticleLink() {
-        return mArticleLink;
+    public String getArticleUrl() {
+        return mArticleUrl;
     }
 
-    public void setArticleLink(String articleLink) {
-        this.mArticleLink = articleLink;
+    public void setArticleUrl(String articleLink) {
+        this.mArticleUrl = articleLink;
     }
 
     public String getThumbnailLink() {
@@ -97,7 +97,7 @@ public class Article {
                 "mId=" + mId +
                 ", mTitle='" + mTitle + '\'' +
                 ", mContent='" + mContent + '\'' +
-                ", mArticleLink='" + mArticleLink + '\'' +
+                ", mArticleUrl='" + mArticleUrl + '\'' +
                 ", mThumbnailLink='" + mThumbnailLink + '\'' +
                 ", mPublishedDate='" + mPublishedDate + '\'' +
                 ", mFavorite=" + mFavorite +

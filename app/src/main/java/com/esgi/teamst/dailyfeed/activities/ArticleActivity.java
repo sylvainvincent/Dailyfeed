@@ -1,7 +1,6 @@
 package com.esgi.teamst.dailyfeed.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -92,10 +91,10 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.fab_web:
                 //// TODO: 09/06/16 intent vers un webview (site de l'article)
-                if(mArticle.getArticleLink() != null){
+                if(mArticle.getArticleUrl() != null){
                     try{
                         Intent intent = new Intent(this, WebArticleActivity.class);
-                        intent.putExtra(EXTRA_ARTICLE_URL,mArticle.getArticleLink());
+                        intent.putExtra(EXTRA_ARTICLE_URL,mArticle.getArticleUrl());
                         startActivity(intent);
                     }catch (Exception e){
                         e.printStackTrace();

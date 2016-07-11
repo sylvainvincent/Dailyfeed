@@ -19,6 +19,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public static final String KEY_ID = "article_id";
     public static final String KEY_TITLE = "article_title";
     public static final String KEY_CONTENT = "article_content";
+    public static final String KEY_URL = "article_url";
     public static final String KEY_THUMBNAIL_LINK = "article_thumbnail_link";
     public static final String KEY_PUBLISHED_DATE = "article_published_date";
     public static final String KEY_IS_FAVORITE = "article_favorite";
@@ -28,9 +29,10 @@ public class ArticleDAO extends AbstractDAO<Article> {
             TABLE_NAME + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             KEY_TITLE + " TEXT UNIQUE," +
-            KEY_PUBLISHED_DATE + " TEXT," +
             KEY_CONTENT + " TEXT," +
+            KEY_URL + " TEXT," +
             KEY_THUMBNAIL_LINK + " TEXT," +
+            KEY_PUBLISHED_DATE + " TEXT," +
             KEY_IS_FAVORITE + " INTEGER," +
             KEY_SOURCE_ID + " INTEGER," +
             "FOREIGN KEY(" + KEY_SOURCE_ID + ") REFERENCES " +
@@ -39,6 +41,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public static final String[] ALL_COLUMNS = {KEY_ID,
             KEY_TITLE,
             KEY_CONTENT,
+            KEY_URL,
             KEY_THUMBNAIL_LINK,
             KEY_PUBLISHED_DATE,
             KEY_IS_FAVORITE,
@@ -120,6 +123,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
         article.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
         article.setTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
         article.setContent(cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
+        article.setArticleUrl(cursor.getString(cursor.getColumnIndex(KEY_URL)));
         article.setThumbnailLink(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL_LINK)));
         article.setPublishedDate(cursor.getString(cursor.getColumnIndex(KEY_PUBLISHED_DATE)));
         article.setFavorite(cursor.getInt(cursor.getColumnIndex(KEY_IS_FAVORITE)) > 0);
@@ -131,15 +135,12 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public ContentValues objectToContentValues(Article article) {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, article.getTitle());
-        Log.d("ARTICLE INSERTED DB", article.getTitle());
-        values.put(KEY_PUBLISHED_DATE, article.getPublishedDate());
-        Log.d("ARTICLE INSERTED DB", article.getPublishedDate());
         values.put(KEY_CONTENT, article.getContent());
-        values.put(KEY_THUMBNAIL_LINK, article.getArticleLink());
+        values.put(KEY_URL, article.getArticleUrl());
+        values.put(KEY_THUMBNAIL_LINK, article.getArticleUrl());
+        values.put(KEY_PUBLISHED_DATE, article.getPublishedDate());
         values.put(KEY_IS_FAVORITE,article.isFavorite());
-        Log.d("ARTICLE INSERTED DB", String.valueOf(article.isFavorite()));
         values.put(KEY_SOURCE_ID, article.getSourceId());
-        Log.d("ARTICLE INSERTED DB", String.valueOf(article.getSourceId()));
         return values;
     }
 
