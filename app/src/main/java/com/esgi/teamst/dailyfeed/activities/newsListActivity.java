@@ -36,20 +36,18 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         super.setContentView(R.layout.activity_news_list);
         this.initView();
         prefs = getSharedPreferences("com.esgi.teamst.dailyfeed", MODE_PRIVATE);
-        //new DisplayListHandler(mListViewArticlesMain, newsListActivity.this).execute();
-        new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        /*if (prefs.getBoolean("firstrun", true)) {
+        if (prefs.getBoolean("firstrun", true)) {
             // Do first run stuff here then set 'firstrun' as false
-            new XMLParseHandler(mListViewArticlesMain, newsListActivity.this).execute();
+            new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute();
             // using the following line to edit/commit prefs
             prefs.edit().putBoolean("firstrun", false).commit();
-        }*/
+        }
     }
 
     @Override

@@ -68,10 +68,8 @@ public class XMLParseHandler {
                             String outputPattern = "dd-MMM-yyyy-h:mm";
                             SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
                             SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
-
                             Date date = null;
                             String str = null;
-
                             try {
                                 date = inputFormat.parse(parser.nextText());
                                 str = outputFormat.format(date);

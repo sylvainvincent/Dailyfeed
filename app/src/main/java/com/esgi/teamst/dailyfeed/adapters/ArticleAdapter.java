@@ -31,12 +31,13 @@ public class ArticleAdapter extends BaseAdapter {
 
     private List<Article> mArticleArrayList;
     private Context mContext;
-    private  List<Source> sources;
+    private  List<Source> msources;
+
 
     public ArticleAdapter(Context context, List<Article> articleArrayList, List<Source> sources){
         mContext = context;
         mArticleArrayList = articleArrayList;
-        sources = this.sources;
+        msources = sources;
     }
 
     @Override
@@ -72,12 +73,11 @@ public class ArticleAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Article article = mArticleArrayList.get(position);
-       // Log.d("SOURCE_ID", String.valueOf(sources.get));
         if(article != null){
             //Source source;
             Log.d("ART_TITLE", article.getmTitle());
             viewHolder.mArticleTitle.setText(article.getmTitle());
-            viewHolder.mArticleSource.setText(sources.get(article.getmSourceId()).getmName());
+            viewHolder.mArticleSource.setText(msources.get(article.getmSourceId()-1).getmName());
             //Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
         }
 

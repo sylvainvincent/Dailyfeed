@@ -1,5 +1,9 @@
 package com.esgi.teamst.dailyfeed;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,5 +32,37 @@ public class Util {
         Pattern p = Pattern.compile("[a-zA-Z]+");
         Matcher matcher = p.matcher(text);
         return matcher.matches();
+    }
+
+    /**
+     * Formattage d'un String en Date
+     */
+    public static Date formatStringToDate (String artDate){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        String dateInString = artDate;
+        Date date = null;
+        try {
+            date = formatter.parse(dateInString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(date);
+            System.out.println(formatter.format(date));
+
+        return date;
+    }
+
+    /**
+     * Comparaison de deux dates
+     */
+    public static Date compareDates (String artDate){
+        Calendar today = Calendar.getInstance();
+        Calendar articleDate = Calendar.getInstance();
+        Date formatArtDate = formatStringToDate(artDate);
+        articleDate.setTime(formatArtDate);
+        long diff = today.getTimeInMillis() - articleDate.getTimeInMillis();
+
+        return null;
     }
 }
