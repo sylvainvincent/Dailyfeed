@@ -26,7 +26,8 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
 
     public static final String TAG = newsListActivity.class.getSimpleName();
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
-    protected FloatingActionButton fabDisconnection;
+    protected FloatingActionButton mFabDisconnection;
+    protected FloatingActionButton mFabFavoritesList;
     ListView mListViewArticlesMain;
     SharedPreferences prefs = null;
 
@@ -34,7 +35,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_news_list);
-        this.initView();
+        this.initViews();
         prefs = getSharedPreferences("com.esgi.teamst.dailyfeed", MODE_PRIVATE);
     }
 
@@ -59,25 +60,32 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             Log.i(TAG, "onItemClick: ");
             Article article = (Article) parent.getItemAtPosition(position);
             Intent articleActivityIntent = new Intent(newsListActivity.this, ArticleActivity.class);
-            articleActivityIntent.putExtra(EXTRA_ARTICLE_ID, article.getmId());
+            articleActivityIntent.putExtra(EXTRA_ARTICLE_ID, article.getId());
             startActivity(articleActivityIntent);
         }
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (v.getId()){
             case R.id.fab_disconnection:
-                Intent intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 finish();
                 startActivity(intent);
+                break;
+            case R.id.fab_favorites_list:
+                intent = new Intent(this, MainActivity.class);
                 break;
         }
     }
 
-    private void initView() {
-        fabDisconnection = (FloatingActionButton) findViewById(R.id.fab_disconnection);
-            fabDisconnection.setOnClickListener(this);
+    private void initViews() {
+        mFabDisconnection = (FloatingActionButton) findViewById(R.id.fab_disconnection);
+            mFabDisconnection.setOnClickListener(this);
+        mFabFavoritesList = (FloatingActionButton) findViewById(R.id.fab_favorites_list);
+            mFabFavoritesList.setOnClickListener(this);
         mListViewArticlesMain = (ListView) findViewById(R.id.list_articles);
+        mListViewArticlesMain.setOnItemClickListener(this);
     }
 }

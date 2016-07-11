@@ -1,4 +1,4 @@
-package com.esgi.teamst.dailyfeed;
+package com.esgi.teamst.dailyfeed.util;
 
 import android.util.Log;
 

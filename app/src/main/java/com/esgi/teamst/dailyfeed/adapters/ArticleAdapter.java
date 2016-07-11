@@ -2,9 +2,12 @@ package com.esgi.teamst.dailyfeed.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.transition.ArcMotion;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +18,10 @@ import com.esgi.teamst.dailyfeed.models.Source;
 import com.esgi.teamst.dailyfeed.Util;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,6 +29,7 @@ import java.util.List;
  */
 public class ArticleAdapter extends BaseAdapter {
 
+    private static final String TAG = ArticleAdapter.class.getSimpleName();
     private List<Article> mArticleArrayList;
     private Context mContext;
     private  List<Source> msources;
@@ -58,8 +66,8 @@ public class ArticleAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.mArticleTitle = (TextView) convertView.findViewById(R.id.text_article_title);
             viewHolder.mArticleSource = (TextView) convertView.findViewById(R.id.text_article_source);
+            viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
             viewHolder.mArticleDate = (TextView) convertView.findViewById(R.id.text_article_date);
-            //viewHolder.mArticleImage = (ImageView) convertView.findViewById(R.id.image_article_thumb);
             convertView.setTag(viewHolder);
 
         }else{
@@ -72,7 +80,11 @@ public class ArticleAdapter extends BaseAdapter {
             viewHolder.mArticleTitle.setText(article.getmTitle());
             viewHolder.mArticleSource.setText(msources.get(article.getmSourceId()-1).getmName());
             viewHolder.mArticleDate.setText(new Util().dateDiff(article.getmPublishedDate()));
-            //Picasso.with(mContext).load(article.getmThumbnailLink()).into(viewHolder.mArticleImage);
+            if(article.getThumbnailLink() != null){
+                Picasso.with(mContext).load(article.getThumbnailLink()).into(viewHolder.mArticleImage);
+            }else{
+                Picasso.with(mContext).load(R.drawable.article_picture).into(viewHolder.mArticleImage);
+            }
         }
 
         return convertView;

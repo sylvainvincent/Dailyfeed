@@ -7,10 +7,7 @@ import android.util.Log;
 
 import com.esgi.teamst.dailyfeed.models.Article;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by sylvainvincent on 05/05/16.
@@ -30,7 +27,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public static final String CREATE_TABLE = "CREATE TABLE " +
             TABLE_NAME + "(" +
             KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            KEY_TITLE + " TEXT," +
+            KEY_TITLE + " TEXT UNIQUE," +
             KEY_PUBLISHED_DATE + " TEXT," +
             KEY_CONTENT + " TEXT," +
             KEY_THUMBNAIL_LINK + " TEXT," +
@@ -106,44 +103,43 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public boolean update(Article article) {
         return getSQLiteDb().update(TABLE_NAME,
                 objectToContentValues(article),
-                KEY_ID + "=" + article.getmId(),
+                KEY_ID + "=" + article.getId(),
                 null) > 0;
     }
-
 
     @Override
     public boolean delete(Article article) {
         return getSQLiteDb().delete(TABLE_NAME,
-                KEY_ID + "=" + article.getmId(),
+                KEY_ID + "=" + article.getId(),
                 null) > 0;
     }
 
     @Override
     public Article cursorToObject(Cursor cursor) {
         Article article = new Article();
-        article.setmId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-        article.setmTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
-        article.setmContent(cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
-        article.setmThumbnailLink(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL_LINK)));
-        article.setmPublishedDate(cursor.getString(cursor.getColumnIndex(KEY_PUBLISHED_DATE)));
-        article.setmIsFavorite(cursor.getInt(cursor.getColumnIndex(KEY_IS_FAVORITE)) > 0);
-        article.setmSourceId(cursor.getInt(cursor.getColumnIndex(KEY_SOURCE_ID)));
+        article.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+        article.setTitle(cursor.getString(cursor.getColumnIndex(KEY_TITLE)));
+        article.setContent(cursor.getString(cursor.getColumnIndex(KEY_CONTENT)));
+        article.setThumbnailLink(cursor.getString(cursor.getColumnIndex(KEY_THUMBNAIL_LINK)));
+        article.setPublishedDate(cursor.getString(cursor.getColumnIndex(KEY_PUBLISHED_DATE)));
+        article.setFavorite(cursor.getInt(cursor.getColumnIndex(KEY_IS_FAVORITE)) > 0);
+        article.setSourceId(cursor.getInt(cursor.getColumnIndex(KEY_SOURCE_ID)));
         return article;
     }
 
     @Override
     public ContentValues objectToContentValues(Article article) {
         ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, article.getmTitle());
-        Log.d("ARTICLE INSERTED DB", article.getmTitle());
-        values.put(KEY_PUBLISHED_DATE, article.getmPublishedDate());
-        Log.d("ARTICLE INSERTED DB", article.getmPublishedDate());
-        values.put(KEY_CONTENT, article.getmContent());
-        values.put(KEY_THUMBNAIL_LINK, article.getmArticleLink());
-        values.put(KEY_IS_FAVORITE,article.getmIsFavorite());
-        Log.d("ARTICLE INSERTED DB", String.valueOf(article.getmIsFavorite()));
-        values.put(KEY_SOURCE_ID, article.getmSourceId());
-        Log.d("ARTICLE INSERTED DB", String.valueOf(article.getmSourceId()));
+        values.put(KEY_TITLE, article.getTitle());
+        Log.d("ARTICLE INSERTED DB", article.getTitle());
+        values.put(KEY_PUBLISHED_DATE, article.getPublishedDate());
+        Log.d("ARTICLE INSERTED DB", article.getPublishedDate());
+        values.put(KEY_CONTENT, article.getContent());
+        values.put(KEY_THUMBNAIL_LINK, article.getArticleLink());
+        values.put(KEY_IS_FAVORITE,article.isFavorite());
+        Log.d("ARTICLE INSERTED DB", String.valueOf(article.isFavorite()));
+        values.put(KEY_SOURCE_ID, article.getSourceId());
+        Log.d("ARTICLE INSERTED DB", String.valueOf(article.getSourceId()));
         return values;
     }
 

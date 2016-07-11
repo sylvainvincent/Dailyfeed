@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.esgi.teamst.dailyfeed.R;
-import com.esgi.teamst.dailyfeed.Util;
+import com.esgi.teamst.dailyfeed.util.Util;
 import com.esgi.teamst.dailyfeed.dao.UserDAO;
 import com.esgi.teamst.dailyfeed.models.User;
 

@@ -1,10 +1,12 @@
 package com.esgi.teamst.dailyfeed.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,55 +21,92 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by sylvainvincent on 09/05/16.
+ *
  */
 public class ArticleActivity extends AppCompatActivity implements View.OnClickListener {
 
-    protected ImageView imageArticle;
-    protected Toolbar toolbarArticle;
-    protected CollapsingToolbarLayout collapsingToolbar;
-    protected AppBarLayout appBarLayout;
-    protected TextView textEventTitle;
-    protected TextView textArticleDescription;
-    protected TextView textArticleSource;
-    protected TextView textArticleDate;
-    protected NestedScrollView scroll;
-    protected FloatingActionButton fabSave;
-    protected FloatingActionButton fabShare;
-    protected FloatingActionButton fabWeb;
-    protected CoordinatorLayout coordinatorEventDetail;
-    int articleId;
-    Article article;
+    public static final String EXTRA_ARTICLE_URL = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_URL";
+
+    private ImageView mImageArticle;
+    private Toolbar mToolbarArticle;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private AppBarLayout mAppBarLayout;
+    private TextView mTextEventTitle;
+    private TextView mTextArticleDescription;
+    private TextView mTextArticleSource;
+    private TextView mTextArticleDate;
+    private NestedScrollView scroll;
+    private FloatingActionButton mFabSave;
+    private FloatingActionButton mFabShare;
+    private FloatingActionButton mFabWeb;
+    private CoordinatorLayout mCoordinatorEventDetail;
+
+    private ArticleDAO articleDAO;
+    private int mArticleId;
+    private Article mArticle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_article);
-        initView();
-        articleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
-        if(articleId != -1){
-            ArticleDAO articleDAO = new ArticleDAO(this);
+        this.initViews();
+        mArticleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
+        if(mArticleId != -1){
+            articleDAO = new ArticleDAO(this);
             articleDAO.open();
-            article = articleDAO.get(articleId);
+            mArticle = articleDAO.get(mArticleId);
             articleDAO.close();
+            this.fillLayout();
         }
 
 
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_save:
-                Picasso.with(this).load(R.drawable.ic_action_star_10).into(fabSave);
+                if(!mArticle.isFavorite()){
+                    mArticle.setFavorite(true);
+                    articleDAO.open();
+                    boolean update = articleDAO.update(mArticle);
+                    articleDAO.close();
+                    if(update){
+                        Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
+                    }else{
+                        mArticle.setFavorite(false);
+                    }
+                }else{
+                    mArticle.setFavorite(false);
+                    articleDAO.open();
+                    boolean update = articleDAO.update(mArticle);
+                    articleDAO.close();
+                    if(update){
+                        Picasso.with(this).load(R.drawable.ic_action_star_empty).into(mFabSave);
+                    }else{
+                        mArticle.setFavorite(true);
+                    }
+                }
+
                 break;
             case R.id.fab_web:
                 //// TODO: 09/06/16 intent vers un webview (site de l'article)
+                if(mArticle.getArticleLink() != null){
+                    try{
+                        Intent intent = new Intent(this, WebArticleActivity.class);
+                        intent.putExtra(EXTRA_ARTICLE_URL,mArticle.getArticleLink());
+                        startActivity(intent);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }else{
+                    Snackbar.make(mCoordinatorEventDetail, getString(R.string.error_article_url_is_not_exist),Snackbar.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.fab_share:
-                if(article != null) {
+                if(mArticle != null) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
                     sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
@@ -78,21 +117,31 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-
-    private void initView() {
-        imageArticle = (ImageView) findViewById(R.id.image_article);
-        toolbarArticle = (Toolbar) findViewById(R.id.toolbar_article);
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        textEventTitle = (TextView) findViewById(R.id.text_event_title);
-        textArticleDescription = (TextView) findViewById(R.id.text_article_description);
-        textArticleSource = (TextView) findViewById(R.id.text_article_source);
-        textArticleDate = (TextView) findViewById(R.id.text_article_date);
+    private void initViews() {
+        mImageArticle = (ImageView) findViewById(R.id.image_article);
+        mToolbarArticle = (Toolbar) findViewById(R.id.toolbar_article);
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        mTextEventTitle = (TextView) findViewById(R.id.text_event_title);
+        mTextArticleDescription = (TextView) findViewById(R.id.text_article_description);
+        mTextArticleSource = (TextView) findViewById(R.id.text_article_source);
+        mTextArticleDate = (TextView) findViewById(R.id.text_article_date);
         scroll = (NestedScrollView) findViewById(R.id.scroll);
-        fabSave = (FloatingActionButton) findViewById(R.id.fab_save);
-        fabSave.setOnClickListener(ArticleActivity.this);
-        fabShare = (FloatingActionButton) findViewById(R.id.fab_share);
-        fabWeb = (FloatingActionButton) findViewById(R.id.fab_web);
-        coordinatorEventDetail = (CoordinatorLayout) findViewById(R.id.coordinator_event_detail);
+        mFabSave = (FloatingActionButton) findViewById(R.id.fab_save);
+        mFabSave.setOnClickListener(ArticleActivity.this);
+        mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
+        mFabShare.setOnClickListener(this);
+        mFabWeb = (FloatingActionButton) findViewById(R.id.fab_web);
+        mFabWeb.setOnClickListener(this);
+        mCoordinatorEventDetail = (CoordinatorLayout) findViewById(R.id.coordinator_event_detail);
+    }
+
+    private void fillLayout(){
+        mTextEventTitle.setText(mArticle.getTitle());
+        mTextArticleDescription.setText(mArticle.getContent());
+        mTextArticleDate.setText(mArticle.getPublishedDate());
+        if(mArticle.isFavorite()){
+            Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
+        }
     }
 }
