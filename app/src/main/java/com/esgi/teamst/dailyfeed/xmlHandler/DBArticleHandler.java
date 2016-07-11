@@ -13,11 +13,12 @@ import com.esgi.teamst.dailyfeed.models.Source;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by tracysablon on 18/06/16.
  */
-public class DBArticleHandler extends AsyncTask<String, Void, ArrayList<Article>> {
+public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article>> {
 
     Context context;
     ArrayList<Article> showArticleList;
@@ -55,14 +56,20 @@ public class DBArticleHandler extends AsyncTask<String, Void, ArrayList<Article>
     }
 
     @Override
-    protected ArrayList<Article> doInBackground(String... params) {
+    protected ArrayList<Article> doInBackground(Boolean... params) {
+
+        Log.d("BOOL param", String.valueOf(params[0]));
 
         SourceDAO sourceDAO = new SourceDAO(context);
         sourceDAO.open();
         sources = sourceDAO.getAllSource();
-        ArrayList<Article> articlesList = new XMLParseHandler().loadXmlFeeds(sources);
+
+        if (params[0] == Boolean.TRUE){
+            ArrayList<Article> articlesList = new XMLParseHandler().loadXmlFeeds(sources);
+            insertArticles(articlesList);
+        }
+
         sourceDAO.close();
-        insertArticles(articlesList);
         showArticles();
         Log.d("TEST show size", String.valueOf(showArticleList.size()));
 
