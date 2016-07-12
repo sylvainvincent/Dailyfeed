@@ -50,14 +50,24 @@
         app:fab_labelStyle="@style/fab_menu_labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_disconnection"
+            android:id="@+id/fab_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_colorPressed="@color/colorAccent"
-            app:fab_icon="@drawable/ic_action_export"
-            app:fab_title="@string/label_disconnection" />
+            app:fab_icon="@drawable/ic_action_reload"
+            app:fab_title="Actualiser" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_icon="@drawable/ic_action_filter"
+            app:fab_title="Filtre" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_favorites_list"
@@ -70,14 +80,14 @@
             app:fab_title="Afficher Favoris" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/join_event_button"
+            android:id="@+id/fab_disconnection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_colorPressed="@color/colorAccent"
-            app:fab_icon="@drawable/ic_action_add"
-            app:fab_title="" />
+            app:fab_icon="@drawable/ic_action_export"
+            app:fab_title="@string/label_disconnection" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

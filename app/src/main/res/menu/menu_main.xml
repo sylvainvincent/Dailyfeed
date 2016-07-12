@@ -4,6 +4,8 @@
     tools:context=".activities.newsListActivity">
     <item
         android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_reload"
+        android:title="@string/action_refresh"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

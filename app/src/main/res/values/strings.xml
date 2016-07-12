@@ -4,6 +4,7 @@
     <string name="action_to_subscription">Pas encore de compte ? S\'incrire ici.</string>
     <string name="action_to_login">Vous avez un compte ? Se connecter ici.</string>
     <string name="action_subscribe">S\'inscrire</string>
+    <string name="action_refresh">Actualiser</string>
 
     <string name="label_disconnection">Déconnexion</string>
 
