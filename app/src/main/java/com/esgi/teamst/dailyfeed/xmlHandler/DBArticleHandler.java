@@ -72,7 +72,6 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
 
         sourceDAO.close();
         showArticles();
-        Log.d("TEST show size", String.valueOf(showArticleList.size()));
 
         return showArticleList;
     }
@@ -80,7 +79,6 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
     @Override
     protected void onPostExecute(ArrayList<Article> articleResult) {
         //Run on the UI thread after doBackground
-        Log.d("Articles size onPost: ", String.valueOf(articleResult.size()));
         mlistViewArticles.setAdapter(new ArticleAdapter(context,articleResult,sources));
     }
 

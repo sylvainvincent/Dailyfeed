@@ -25,6 +25,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(SourceDAO.INSERT_DEFAULT);
         db.execSQL(ArticleDAO.CREATE_TABLE);
         db.execSQL(UserDAO.CREATE_TABLE);
+        db.execSQL(ArticleFavoriteDAO.CREATE_TABLE);
     }
 
     @Override
@@ -32,6 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + SourceDAO.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + ArticleDAO.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + UserDAO.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ArticleFavoriteDAO.TABLE_NAME);
 
         this.onCreate(db);
     }

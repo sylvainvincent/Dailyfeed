@@ -65,7 +65,7 @@ public class LoginFragment extends Fragment {
                             userDAO.open();
                             User user = userDAO.get(mAutoCompleteEmail.getText().toString(), mEditPassword.getText().toString());
                             if (user != null) {
-                                mLoginFragmentCallback.connection(user.getmId());
+                                mLoginFragmentCallback.connection(user.getId());
                             }else{
                                 Snackbar.make(frameFragmentLogin, getString(R.string.error_email_or_password_are_incorrect), Snackbar.LENGTH_INDEFINITE).show();
                             }

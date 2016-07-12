@@ -26,6 +26,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
 
     public static final String TAG = newsListActivity.class.getSimpleName();
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
+    public static int mUserId;
     protected FloatingActionButton mFabDisconnection;
     protected FloatingActionButton mFabFavoritesList;
     ListView mListViewArticlesMain;
@@ -36,6 +37,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_news_list);
         this.initViews();
+        mUserId = getIntent().getIntExtra(MainActivity.EXTRA_USER_ID, -1);
         prefs = getSharedPreferences("com.esgi.teamst.dailyfeed", MODE_PRIVATE);
     }
 
@@ -75,7 +77,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
                 startActivity(intent);
                 break;
             case R.id.fab_favorites_list:
-                intent = new Intent(this, MainActivity.class);
+               startActivity(new Intent(this, FavoritesListActivity.class));
                 break;
         }
     }

@@ -1,5 +1,7 @@
 package com.esgi.teamst.dailyfeed.models;
 
+import java.util.List;
+
 /**
  * Classe métier représentant l'utilisateur de l'application
  */
@@ -9,47 +11,68 @@ public class User {
     private String mFirstName;
     private String mLastName;
     private String mEmail;
-    private String password;
+    private String mPassword;
+    private List<Article> mFavoritesArticlesList;
 
     public User() {}
 
-    public int getmId() {
+    public int getId() {
         return mId;
     }
 
-    public void setmId(int mId) {
-        this.mId = mId;
+    public void setId(int id) {
+        mId = id;
     }
 
-    public String getmFirstName() {
+    public String getFirstName() {
         return mFirstName;
     }
 
-    public void setmFirstName(String mFirstName) {
-        this.mFirstName = mFirstName;
+    public void setFirstName(String firstName) {
+        mFirstName = firstName;
     }
 
-    public String getmLastName() {
+    public String getLastName() {
         return mLastName;
     }
 
-    public void setmLastName(String mLastName) {
-        this.mLastName = mLastName;
+    public void setLastName(String lastName) {
+        mLastName = lastName;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String mEmail) {
-        this.mEmail = mEmail;
+    public void setEmail(String email) {
+        mEmail = email;
     }
 
     public String getPassword() {
-        return password;
+        return mPassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        mPassword = password;
+    }
+
+    public List<Article> getmFavoritesArticlesList() {
+        return mFavoritesArticlesList;
+    }
+
+    public void setmFavoritesArticlesList(List<Article> mFavoritesArticlesList) {
+        this.mFavoritesArticlesList = mFavoritesArticlesList;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "mId=" + mId +
+                ", mFirstName='" + mFirstName + '\'' +
+                ", mLastName='" + mLastName + '\'' +
+                ", mEmail='" + mEmail + '\'' +
+                ", mPassword='" + mPassword + '\'' +
+                ", mFavoritesArticlesList=" + mFavoritesArticlesList +
+                '}';
     }
 }

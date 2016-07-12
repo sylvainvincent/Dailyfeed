@@ -70,9 +70,9 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
                // todo ajouté isFormValid() dans la version final
                 if(true){
                     User user = new User();
-                    user.setmFirstName(mFirstNameField.getText().toString());
-                    user.setmLastName(mLastNameField.getText().toString());
-                    user.setmEmail(mEmailField.getText().toString());
+                    user.setFirstName(mFirstNameField.getText().toString());
+                    user.setLastName(mLastNameField.getText().toString());
+                    user.setEmail(mEmailField.getText().toString());
                     user.setPassword(mPasswordField.getText().toString());
                     UserDAO userDAO = new UserDAO(getActivity());
                     userDAO.open();

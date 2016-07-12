@@ -100,7 +100,7 @@ public class UserDAO extends AbstractDAO<User> {
             emailList = new ArrayList<>();
             cursor.moveToFirst();
             while(!cursor.isAfterLast()){
-                emailList.add(cursorToObject(cursor).getmEmail());
+                emailList.add(cursorToObject(cursor).getEmail());
                 cursor.moveToNext();
             }
         }
@@ -111,24 +111,24 @@ public class UserDAO extends AbstractDAO<User> {
     public boolean update(User user) {
         return getSQLiteDb().update(TABLE_NAME,
                 objectToContentValues(user),
-                KEY_ID + "=" + user.getmId(),
+                KEY_ID + "=" + user.getId(),
                 null) > 0;
     }
 
     @Override
     public boolean delete(User user) {
         return getSQLiteDb().delete(TABLE_NAME,
-                KEY_ID + "=" + user.getmId(),
+                KEY_ID + "=" + user.getId(),
                 null) > 0;
     }
 
     @Override
     public User cursorToObject(Cursor cursor) {
         User user = new User();
-        user.setmId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-        user.setmFirstName(cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME)));
-        user.setmLastName(cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
-        user.setmEmail(cursor.getString(cursor.getColumnIndex(KEY_EMAIL)));
+        user.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
+        user.setFirstName(cursor.getString(cursor.getColumnIndex(KEY_FIRST_NAME)));
+        user.setLastName(cursor.getString(cursor.getColumnIndex(KEY_LAST_NAME)));
+        user.setEmail(cursor.getString(cursor.getColumnIndex(KEY_EMAIL)));
         user.setPassword(cursor.getString(cursor.getColumnIndex(KEY_PASSWORD)));
         return user;
     }
@@ -136,9 +136,9 @@ public class UserDAO extends AbstractDAO<User> {
     @Override
     public ContentValues objectToContentValues(User user) {
         ContentValues values = new ContentValues();
-        values.put(KEY_FIRST_NAME, user.getmFirstName());
-        values.put(KEY_LAST_NAME, user.getmLastName());
-        values.put(KEY_EMAIL, user.getmEmail());
+        values.put(KEY_FIRST_NAME, user.getFirstName());
+        values.put(KEY_LAST_NAME, user.getLastName());
+        values.put(KEY_EMAIL, user.getEmail());
         values.put(KEY_PASSWORD, user.getPassword());
         return values;
     }

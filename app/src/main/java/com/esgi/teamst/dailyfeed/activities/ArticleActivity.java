@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.dao.ArticleDAO;
+import com.esgi.teamst.dailyfeed.dao.ArticleFavoriteDAO;
 import com.esgi.teamst.dailyfeed.models.Article;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
@@ -67,10 +68,15 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.fab_save:
                 if(!mArticle.isFavorite()){
-                    mArticle.setFavorite(true);
+                    /*mArticle.setFavorite(true);
                     articleDAO.open();
                     boolean update = articleDAO.update(mArticle);
+                    articleDAO.close();*/
+                    ArticleFavoriteDAO articleFavoriteDAO = new ArticleFavoriteDAO(this);
+                    articleFavoriteDAO.open();
+                    boolean update = articleFavoriteDAO.add(newsListActivity.mUserId, mArticleId);
                     articleDAO.close();
+
                     if(update){
                         Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
                     }else{

@@ -25,6 +25,7 @@ import com.esgi.teamst.dailyfeed.fragments.RegistrationFragment;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,LoginFragment.LoginFragmentCallback,RegistrationFragment.RegistrationFragmentCallback {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String EXTRA_USER_ID = "com.esgi.teamst.dailyfeed.activities.MainActivity.EXTRA_USER_ID";
     private RegistrationFragment mRegistrationFragment;
     private LoginFragment mLoginFragment;
     private TextView mTextActionChange;
@@ -56,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void connection(int userId) {
         Log.i(TAG, "connection: réussie");
-        startActivity(new Intent(MainActivity.this, newsListActivity.class));
+        Intent intent = new Intent(MainActivity.this, newsListActivity.class);
+        intent.putExtra(EXTRA_USER_ID, userId);
+        startActivity(intent);
     }
 
     private void initView() {
