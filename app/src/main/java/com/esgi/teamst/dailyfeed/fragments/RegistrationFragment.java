@@ -43,7 +43,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_registration, container, false);
-        initView(rootView);
+        initViews(rootView);
         mSubscribeButton.setOnClickListener(this);
         return rootView;
     }
@@ -54,7 +54,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
     }
 
-    private void initView(View rootView) {
+    private void initViews(View rootView) {
         mLastNameField = (EditText) rootView.findViewById(R.id.lastname_field);
         mFirstNameField = (EditText) rootView.findViewById(R.id.firstname_field);
         mEmailField = (EditText) rootView.findViewById(R.id.autocomplete_email);

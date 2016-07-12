@@ -3,9 +3,7 @@ package com.esgi.teamst.dailyfeed.activities;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.initView();
+        this.initViews();
         setSupportActionBar(toolbar);
         mTextActionChange.setOnClickListener(this);
         mLoginFragment = new LoginFragment();
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    private void initView() {
+    private void initViews() {
         mTextActionChange = (TextView) findViewById(R.id.text_action_change);
         mTitleMain = (TextView) findViewById(R.id.title_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);

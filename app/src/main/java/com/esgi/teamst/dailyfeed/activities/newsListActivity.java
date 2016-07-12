@@ -77,7 +77,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
                 startActivity(intent);
                 break;
             case R.id.fab_favorites_list:
-               startActivity(new Intent(this, FavoritesListActivity.class));
+                startActivity(new Intent(this, FavoritesListActivity.class));
                 break;
         }
     }

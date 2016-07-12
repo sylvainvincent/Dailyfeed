@@ -32,9 +32,9 @@ public class ArticleFavoriteDAO{
 
     public static final String CREATE_TABLE = "CREATE TABLE " +
             TABLE_NAME + "(" +
-            KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            KEY_USER_ID + " INTEGER," +
-            KEY_ARTICLE_ID + " INTEGER," +
+            KEY_ID + " INTEGER AUTOINCREMENT," +
+            KEY_USER_ID + " INTEGER PRIMARY KEY," +
+            KEY_ARTICLE_ID + " INTEGER PRIMARY KEY," +
             "FOREIGN KEY(" + KEY_USER_ID + ") REFERENCES " +
             UserDAO.TABLE_NAME + "(" + UserDAO.KEY_ID + ")," +
             "FOREIGN KEY(" + KEY_ARTICLE_ID + ") REFERENCES " +
@@ -64,8 +64,26 @@ public class ArticleFavoriteDAO{
                 values) >= 0;
     }
 
-    public Article get(int userId, int articleId) {
-        return null;
+    public int get(int userId, int articleId) {
+
+        int articleFavoriteId = 0;
+
+        Cursor mCursor = getSQLiteDb().query(true,
+                TABLE_NAME,
+                ALL_COLUMNS,
+                KEY_ARTICLE_ID + "=" + articleId + " AND " + KEY_USER_ID + "=" + userId,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        if (mCursor.getCount() > 0) {
+            mCursor.moveToFirst();
+            articleFavoriteId = mCursor.getInt(mCursor.getColumnIndex(KEY_ID));
+        }
+
+        return articleFavoriteId;
     }
 
     public List<Article> getAll(int userId){

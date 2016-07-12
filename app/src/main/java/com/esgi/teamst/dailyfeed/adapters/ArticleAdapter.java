@@ -90,6 +90,11 @@ public class ArticleAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void refreshList(List<Article> articleArrayList){
+        mArticleArrayList = articleArrayList;
+        notifyDataSetChanged();
+    }
+
     private class ViewHolder{
         private TextView mArticleTitle;
         private TextView mArticleSource;

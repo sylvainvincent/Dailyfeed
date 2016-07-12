@@ -41,9 +41,13 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private FloatingActionButton mFabWeb;
     private CoordinatorLayout mCoordinatorEventDetail;
 
-    private ArticleDAO articleDAO;
+    private ArticleFavoriteDAO mArticleFavoriteDAO;
+    private ArticleDAO mArticleDAO;
     private int mArticleId;
+    private boolean mFromFavorites;
+    private int articleFavoriteId;
     private Article mArticle;
+    private boolean favorite = false;
 
 
     @Override
@@ -52,13 +56,21 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         super.setContentView(R.layout.activity_article);
         this.initViews();
         mArticleId = getIntent().getIntExtra(newsListActivity.EXTRA_ARTICLE_ID, -1);
+        mFromFavorites = getIntent().getBooleanExtra(FavoritesListActivity.EXTRA_FROM_FAVORITES, favorite);
         if(mArticleId != -1){
-            articleDAO = new ArticleDAO(this);
-            articleDAO.open();
-            mArticle = articleDAO.get(mArticleId);
-            articleDAO.close();
+            mArticleDAO = new ArticleDAO(this);
+            mArticleDAO.open();
+            mArticle = mArticleDAO.get(mArticleId);
+            mArticleDAO.close();
+
+            mArticleFavoriteDAO = new ArticleFavoriteDAO(this);
+            mArticleFavoriteDAO.open();
+            articleFavoriteId = mArticleFavoriteDAO.get(newsListActivity.mUserId, mArticleId);
+            mArticleFavoriteDAO.close();
+
             this.fillLayout();
         }
+
 
 
     }
@@ -67,33 +79,37 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_save:
-                if(!mArticle.isFavorite()){
-                    /*mArticle.setFavorite(true);
-                    articleDAO.open();
-                    boolean update = articleDAO.update(mArticle);
-                    articleDAO.close();*/
+                if(!favorite){
                     ArticleFavoriteDAO articleFavoriteDAO = new ArticleFavoriteDAO(this);
                     articleFavoriteDAO.open();
-                    boolean update = articleFavoriteDAO.add(newsListActivity.mUserId, mArticleId);
-                    articleDAO.close();
+                    boolean addFavorite = articleFavoriteDAO.add(newsListActivity.mUserId, mArticleId);
+                    articleFavoriteDAO.close();
 
-                    if(update){
+                    if(addFavorite){
                         Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
+                        favorite = true;
+
                     }else{
-                        mArticle.setFavorite(false);
+                        Snackbar.make(mCoordinatorEventDetail, getString(R.string.error_article_is_not_save),Snackbar.LENGTH_SHORT).show();
                     }
+
                 }else{
-                    mArticle.setFavorite(false);
-                    articleDAO.open();
-                    boolean update = articleDAO.update(mArticle);
-                    articleDAO.close();
-                    if(update){
+                    ArticleFavoriteDAO articleFavoriteDAO = new ArticleFavoriteDAO(this);
+                    articleFavoriteDAO.open();
+                    boolean deleteFavorite = articleFavoriteDAO.delete(newsListActivity.mUserId, mArticleId);
+                    articleFavoriteDAO.close();
+
+                    if(deleteFavorite){
                         Picasso.with(this).load(R.drawable.ic_action_star_empty).into(mFabSave);
+                        favorite = false;
                     }else{
-                        mArticle.setFavorite(true);
+                        Snackbar.make(mCoordinatorEventDetail, getString(R.string.error_article_is_not_delete),Snackbar.LENGTH_SHORT).show();
                     }
                 }
-
+                // si l'activité précendent est FavoritesListActivity alors on actualise la liste
+                if(mFromFavorites){
+                    setResult(RESULT_OK);
+                }
                 break;
             case R.id.fab_web:
                 //// TODO: 09/06/16 intent vers un webview (site de l'article)
@@ -145,8 +161,11 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         mTextEventTitle.setText(mArticle.getTitle());
         mTextArticleDescription.setText(mArticle.getContent());
         mTextArticleDate.setText(mArticle.getPublishedDate());
-        if(mArticle.isFavorite()){
+
+        if(articleFavoriteId != 0){
             Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
+            favorite = true;
         }
+
     }
 }

@@ -45,7 +45,7 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        initView(rootView);
+        initViews(rootView);
         UserDAO userDAO = new UserDAO(getActivity());
         userDAO.open();
         List<String> emails = userDAO.getAllEmail();
@@ -102,7 +102,7 @@ public class LoginFragment extends Fragment {
         mLoginFragmentCallback = null;
     }
 
-    private void initView(View rootView) {
+    private void initViews(View rootView) {
         mAutoCompleteEmail = (AutoCompleteTextView) rootView.findViewById(R.id.autocomplete_email);
         mEditPassword = (EditText) rootView.findViewById(R.id.edit_password);
         mButtonLogin = (Button) rootView.findViewById(R.id.button_login);
