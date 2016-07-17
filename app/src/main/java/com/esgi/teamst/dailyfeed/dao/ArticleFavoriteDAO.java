@@ -22,19 +22,17 @@ public class ArticleFavoriteDAO{
 
     public static final String TABLE_NAME = "favorite_article";
 
-    public static final String KEY_ID = "favorite_article_id";
     public static final String KEY_USER_ID = UserDAO.KEY_ID;
     public static final String KEY_ARTICLE_ID = ArticleDAO.KEY_ID;
 
-    public static final String[] ALL_COLUMNS = {KEY_ID,
-            KEY_USER_ID,
+    public static final String[] ALL_COLUMNS = {KEY_USER_ID,
             KEY_ARTICLE_ID};
 
     public static final String CREATE_TABLE = "CREATE TABLE " +
             TABLE_NAME + "(" +
-            KEY_ID + " INTEGER AUTOINCREMENT," +
-            KEY_USER_ID + " INTEGER PRIMARY KEY," +
-            KEY_ARTICLE_ID + " INTEGER PRIMARY KEY," +
+            KEY_USER_ID + " INTEGER," +
+            KEY_ARTICLE_ID + " INTEGER," +
+            "PRIMARY KEY (" + KEY_USER_ID + "," + KEY_ARTICLE_ID + ")," +
             "FOREIGN KEY(" + KEY_USER_ID + ") REFERENCES " +
             UserDAO.TABLE_NAME + "(" + UserDAO.KEY_ID + ")," +
             "FOREIGN KEY(" + KEY_ARTICLE_ID + ") REFERENCES " +
@@ -64,9 +62,9 @@ public class ArticleFavoriteDAO{
                 values) >= 0;
     }
 
-    public int get(int userId, int articleId) {
+    public boolean get(int userId, int articleId) {
 
-        int articleFavoriteId = 0;
+        boolean find = false;
 
         Cursor mCursor = getSQLiteDb().query(true,
                 TABLE_NAME,
@@ -79,11 +77,10 @@ public class ArticleFavoriteDAO{
                 null);
 
         if (mCursor.getCount() > 0) {
-            mCursor.moveToFirst();
-            articleFavoriteId = mCursor.getInt(mCursor.getColumnIndex(KEY_ID));
+            find = true;
         }
 
-        return articleFavoriteId;
+        return find;
     }
 
     public List<Article> getAll(int userId){

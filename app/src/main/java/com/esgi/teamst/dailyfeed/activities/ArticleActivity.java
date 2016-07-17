@@ -45,10 +45,9 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private ArticleDAO mArticleDAO;
     private int mArticleId;
     private boolean mFromFavorites;
-    private int articleFavoriteId;
+    private boolean mArticleFavoriteFind;
     private Article mArticle;
     private boolean favorite = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
 
             mArticleFavoriteDAO = new ArticleFavoriteDAO(this);
             mArticleFavoriteDAO.open();
-            articleFavoriteId = mArticleFavoriteDAO.get(newsListActivity.mUserId, mArticleId);
+            mArticleFavoriteFind = mArticleFavoriteDAO.get(newsListActivity.mUserId, mArticleId);
             mArticleFavoriteDAO.close();
 
             this.fillLayout();
@@ -162,7 +161,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         mTextArticleDescription.setText(mArticle.getContent());
         mTextArticleDate.setText(mArticle.getPublishedDate());
 
-        if(articleFavoriteId != 0){
+        if(mArticleFavoriteFind){
             Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
             favorite = true;
         }
