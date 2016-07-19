@@ -34,7 +34,6 @@ public class ArticleAdapter extends BaseAdapter {
     private Context mContext;
     private  List<Source> msources;
 
-
     public ArticleAdapter(Context context, List<Article> articleArrayList, List<Source> sources){
         mContext = context;
         mArticleArrayList = articleArrayList;
@@ -78,7 +77,12 @@ public class ArticleAdapter extends BaseAdapter {
             //Source source;
             Log.d("ART_TITLE", article.getTitle());
             viewHolder.mArticleTitle.setText(article.getTitle());
-            viewHolder.mArticleSource.setText(msources.get(article.getSourceId()-1).getName());
+            Log.d("ART_SOURCE_ID", article.getSourceId()+" ");
+            for(Source source : msources){
+                if(source.getId() == article.getSourceId()){
+                    viewHolder.mArticleSource.setText(source.getName());
+                }
+            }
             viewHolder.mArticleDate.setText(new Util().dateDiff(article.getPublishedDate()));
             if(article.getThumbnailLink() != null){
                 Picasso.with(mContext).load(article.getThumbnailLink()).into(viewHolder.mArticleImage);

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.models.Source;
 
 import java.util.ArrayList;
 
@@ -14,8 +15,9 @@ import java.util.ArrayList;
  */
 public class ArticleDAO extends AbstractDAO<Article> {
 
-    public static final String TABLE_NAME = "article";
+    private static final String TAG = ArticleDAO.class.getSimpleName();
 
+    public static final String TABLE_NAME = "article";
     public static final String KEY_ID = "article_id";
     public static final String KEY_TITLE = "article_title";
     public static final String KEY_CONTENT = "article_content";
@@ -23,6 +25,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
     public static final String KEY_THUMBNAIL_LINK = "article_thumbnail_link";
     public static final String KEY_PUBLISHED_DATE = "article_published_date";
     public static final String KEY_IS_FAVORITE = "article_favorite";
+
     public static final String KEY_SOURCE_ID = SourceDAO.KEY_ID;
 
     public static final String CREATE_TABLE = "CREATE TABLE " +
@@ -37,7 +40,6 @@ public class ArticleDAO extends AbstractDAO<Article> {
             KEY_SOURCE_ID + " INTEGER," +
             "FOREIGN KEY(" + KEY_SOURCE_ID + ") REFERENCES " +
             SourceDAO.TABLE_NAME + "(" + SourceDAO.KEY_ID + "))";
-
     public static final String[] ALL_COLUMNS = {KEY_ID,
             KEY_TITLE,
             KEY_CONTENT,
@@ -78,17 +80,15 @@ public class ArticleDAO extends AbstractDAO<Article> {
         }
     }
 
-    public ArrayList<Article> getAllArticles (){
+    public ArrayList<Article> getAllAvailablesArticles(){
         ArrayList<Article> articlesList = null;
-        Cursor cursor = getSQLiteDb().query(TABLE_NAME,
-                ALL_COLUMNS,
-                null,
-                null,
-                null,
-                null,
-                null);
+
+        Cursor cursor = getSQLiteDb().rawQuery("SELECT * FROM " + TABLE_NAME + "," + SourceDAO.TABLE_NAME +
+                " WHERE " + ArticleDAO.TABLE_NAME + "." + ArticleDAO.KEY_SOURCE_ID + " =  " + SourceDAO.TABLE_NAME + "." + SourceDAO.KEY_ID +
+                " AND " + SourceDAO.KEY_AVAILABLE + " = 1" , null);
 
         if (cursor.getCount() > 0) {
+            Log.i(TAG, "getAllAvailablesArticles: " + cursor.getCount());
             articlesList = new ArrayList<>();
             cursor.moveToFirst();
             while(!cursor.isAfterLast()){
@@ -101,6 +101,8 @@ public class ArticleDAO extends AbstractDAO<Article> {
 
         return articlesList;
     }
+
+
 
     @Override
     public boolean update(Article article) {

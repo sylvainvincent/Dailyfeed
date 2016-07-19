@@ -26,7 +26,6 @@ public class ArticlesService extends Service {
     private ArticleDAO mArticleDao;
     private String mProgrammingId;
     private Timer timer;
-    private Calendar c;
     TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
@@ -79,6 +78,7 @@ public class ArticlesService extends Service {
 
     private void test() {
         Log.i(TAG, "test: TEST");
+
         // TODO: 12/07/16 Actualiser la liste avec les nouveaux articles
     }
 }

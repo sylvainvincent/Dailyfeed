@@ -83,7 +83,7 @@ public class ArticleFavoriteDAO{
         return find;
     }
 
-    public List<Article> getAll(int userId){
+    public List<Article> getAllFavoritesArticles(int userId){
         ArrayList<Article> articlesList = null;
         Cursor cursor = getSQLiteDb().rawQuery("SELECT * FROM " + TABLE_NAME + "," + ArticleDAO.TABLE_NAME +
                 " WHERE " + ArticleDAO.TABLE_NAME + "." + ArticleDAO.KEY_ID + " =  " + ArticleFavoriteDAO.TABLE_NAME + "." + ArticleFavoriteDAO.KEY_ARTICLE_ID +

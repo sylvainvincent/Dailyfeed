@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.esgi.teamst.dailyfeed.R;
+import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
+import com.esgi.teamst.dailyfeed.dao.ArticleDAO;
 import com.esgi.teamst.dailyfeed.dao.SourceDAO;
 import com.esgi.teamst.dailyfeed.models.Article;
 import com.esgi.teamst.dailyfeed.models.Source;
@@ -33,15 +35,18 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
     public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
     public static int mUserId;
 
+    private ArticleAdapter articleAdapter;
+
     private FloatingActionButton mFabDisconnection;
     private FloatingActionButton mFabFavoritesList;
     private FloatingActionButton mFabFilter;
     private ListView mListViewArticlesMain;
-
     private SharedPreferences mPrefs = null;
+    private List<Source> sourceList;
     private SourceDAO mSourceDAO;
     private String[] mSourceNames;
     private boolean[] mSourceBoolean;
+    private boolean[] mSourceBooleanTempo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,18 +57,22 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         startService(intent);
         mUserId = getIntent().getIntExtra(MainActivity.EXTRA_USER_ID, -1);
         mPrefs = getSharedPreferences("com.esgi.teamst.dailyfeed", MODE_PRIVATE);
+
         mSourceDAO = new SourceDAO(this);
         mSourceDAO.open();
-        List<Source> sourceList = mSourceDAO.getAllSource();
+        sourceList = mSourceDAO.getAllSource();
         mSourceDAO.close();
         mSourceNames = new String[sourceList.size()];
         mSourceBoolean = new boolean[sourceList.size()];
+        mSourceBooleanTempo = new boolean[sourceList.size()];
         int i = 0;
         for(Source source : sourceList){
             mSourceNames[i] = source.getName();
-            mSourceBoolean[i] = true;
+            mSourceBoolean[i] = source.isAvailable();
+            mSourceBooleanTempo[i] = source.isAvailable();
             i++;
         }
+
 
 
     }
@@ -79,7 +88,20 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             mPrefs.edit().putBoolean("firstrun", false).commit();
         }
         else {
-            new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(false);
+          //  new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(false);
+            ArticleDAO articleDAO = new ArticleDAO(this);
+            articleDAO.open();
+            List<Article> articles =  articleDAO.getAllAvailablesArticles();
+            articleDAO.close();
+
+            SourceDAO sourceDAO = new SourceDAO(this);
+            sourceDAO.open();
+            List<Source> sources = sourceDAO.getAllSource();
+            sourceDAO.close();
+            articleAdapter = new ArticleAdapter(this, articles, sources);
+            if(sources != null && articles != null){
+                mListViewArticlesMain.setAdapter(articleAdapter);
+            }
         }
     }
 
@@ -100,19 +122,36 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
         switch (v.getId()){
             case R.id.fab_refresh:
                 // TODO: 12/07/16 Mettre ici la fonction pour actualiser la liste
+                    new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(true);
                 break;
             case R.id.fab_filter:
                 AlertDialog builder = new AlertDialog.Builder(this)
                 .setMultiChoiceItems(mSourceNames, mSourceBoolean, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-
+                        mSourceBooleanTempo[which] = isChecked;
                     }
                 })
                 .setPositiveButton(getString(android.R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        mSourceDAO.open();
+                        for(int i = 0; i < sourceList.size(); i++){
+                            sourceList.get(i).setAvailable(mSourceBooleanTempo[i]);
+                            boolean success = mSourceDAO.update(sourceList.get(i));
+                            if(success){
+                                new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(true);
+                            }
+                        }
+                        mSourceDAO.close();
+                    }
+                })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        for(int i = 0; i < mSourceBooleanTempo.length; i++){
+                             mSourceBooleanTempo[i] = mSourceBoolean[i];
+                        }
                     }
                 })
                 .create();

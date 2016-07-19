@@ -16,6 +16,7 @@ import com.esgi.teamst.dailyfeed.dao.SourceDAO;
 import com.esgi.teamst.dailyfeed.models.Article;
 import com.esgi.teamst.dailyfeed.models.Source;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class FavoritesListActivity extends Activity implements AdapterView.OnIte
         this.initViews();
         articleFavoriteDAO = new ArticleFavoriteDAO(this);
         articleFavoriteDAO.open();
-        articles = articleFavoriteDAO.getAll(newsListActivity.mUserId);
+        articles = articleFavoriteDAO.getAllFavoritesArticles(newsListActivity.mUserId);
         articleFavoriteDAO.close();
 
         SourceDAO sourceDAO = new SourceDAO(this);
@@ -54,7 +55,7 @@ public class FavoritesListActivity extends Activity implements AdapterView.OnIte
             mListFavoritesArticles.setAdapter(mArticleAdapter);
             mListFavoritesArticles.setOnItemClickListener(this);
         }else{
-            mTextEmptyList.setText(getString(R.string.text_empty_list));
+            mTextEmptyList.setVisibility(View.VISIBLE);
         }
 
     }
@@ -77,9 +78,15 @@ public class FavoritesListActivity extends Activity implements AdapterView.OnIte
         if(requestCode == REQUEST_ARTICLE){
             if(resultCode == RESULT_OK){
                 articleFavoriteDAO.open();
-                articles = articleFavoriteDAO.getAll(newsListActivity.mUserId);
+                articles = articleFavoriteDAO.getAllFavoritesArticles(newsListActivity.mUserId);
                 articleFavoriteDAO.close();
-                mArticleAdapter.refreshList(articles);
+                if(articles != null){
+                    mArticleAdapter.refreshList(articles);
+                }else{
+                    mArticleAdapter = new ArticleAdapter(this, new ArrayList<Article>(), new ArrayList<Source>());
+                    mListFavoritesArticles.setAdapter(mArticleAdapter);
+                    mTextEmptyList.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

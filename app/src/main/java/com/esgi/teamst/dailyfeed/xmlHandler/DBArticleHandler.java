@@ -13,27 +13,27 @@ import com.esgi.teamst.dailyfeed.models.Source;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by tracysablon on 18/06/16.
  */
 public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article>> {
 
-    Context context;
+    private static final String TAG = DBArticleHandler.class.getSimpleName();
+    Context mContext;
     ArrayList<Article> showArticleList;
     ListView mlistViewArticles;
     private List<Source> sources;
 
-    public DBArticleHandler(ListView mlistViewArticles,Context context) {
+    public DBArticleHandler(ListView listViewArticles,Context context) {
 
-        this.mlistViewArticles = mlistViewArticles;
-        this.context = context;
+        mlistViewArticles = listViewArticles;
+        mContext = context;
     }
 
     public void insertArticles(List<Article> articles) {
 
-        ArticleDAO articleDAO = new ArticleDAO(context);
+        ArticleDAO articleDAO = new ArticleDAO(mContext);
         articleDAO.open();
 
         for (Article article : articles) {
@@ -50,9 +50,9 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
 
     private void showArticles() {
 
-        ArticleDAO articleDAO = new ArticleDAO(context);
+        ArticleDAO articleDAO = new ArticleDAO(mContext);
         articleDAO.open();
-        showArticleList =  articleDAO.getAllArticles();
+        showArticleList =  articleDAO.getAllAvailablesArticles();
         articleDAO.close();
     }
 
@@ -61,11 +61,12 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
 
         Log.d("BOOL param", String.valueOf(params[0]));
 
-        SourceDAO sourceDAO = new SourceDAO(context);
+        SourceDAO sourceDAO = new SourceDAO(mContext);
         sourceDAO.open();
-        sources = sourceDAO.getAllSource();
+        sources = sourceDAO.getAllAvailableSource();
 
         if (params[0] == Boolean.TRUE){
+            Log.i(TAG, "doInBackground: ok");
             ArrayList<Article> articlesList = new XMLParseHandler().loadXmlFeeds(sources);
             insertArticles(articlesList);
         }
@@ -79,10 +80,11 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
     @Override
     protected void onPostExecute(ArrayList<Article> articleResult) {
         //Run on the UI thread after doBackground
-        mlistViewArticles.setAdapter(new ArticleAdapter(context,articleResult,sources));
+        if(articleResult != null && sources != null){
+            if(articleResult.size() > 0 && sources.size() > 0){
+                mlistViewArticles.setAdapter(new ArticleAdapter(mContext,articleResult,sources));
+            }
+        }
     }
-
-
-
 
 }

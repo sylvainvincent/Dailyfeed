@@ -12,6 +12,10 @@ import okhttp3.OkHttpClient;
  */
 public class MainApplication extends Application {
 
+    public static final String PREF_SOURCES = "PREF_SOURCES";
+    public static final String PREF_KEY_SOURCE_1 = "PREF_KEY_SOURCE_1";
+    public static final String PREF_KEY_SOURCE_2 = "PREF_KEY_SOURCE_2";
+    public static final String PREF_KEY_SOURCE_3 = "PREF_KEY_SOURCE_3";
     @Override
     public void onCreate() {
         super.onCreate();

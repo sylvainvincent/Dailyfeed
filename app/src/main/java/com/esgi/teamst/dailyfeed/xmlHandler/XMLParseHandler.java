@@ -50,8 +50,10 @@ public class XMLParseHandler {
                         currentArticle.setSourceId(sourceId);
                     }else if (currentArticle != null) {
                         //check for website title
-                        if(name.equals("title")){
+                        if (name.equals("title")) {
                             currentArticle.setTitle(parser.nextText());
+                        }else if(name.equals("link")){
+                            currentArticle.setArticleUrl(parser.nextText());
                         }else if(name.equals("description")){
                             currentArticle.setContent(parser.nextText());
                             Log.d("LOG PARSE CONTENT : ",currentArticle.getContent());

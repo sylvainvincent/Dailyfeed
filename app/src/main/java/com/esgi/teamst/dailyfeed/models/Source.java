@@ -8,6 +8,7 @@ public class Source {
     private int mId;
     private String mName;
     private String mUrl;
+    private boolean mAvailable;
 
     public Source() {}
 
@@ -31,4 +32,11 @@ public class Source {
 
     public void setUrl(String mUrl) { this.mUrl = mUrl; }
 
+    public boolean isAvailable() {
+        return mAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        this.mAvailable = available;
+    }
 }

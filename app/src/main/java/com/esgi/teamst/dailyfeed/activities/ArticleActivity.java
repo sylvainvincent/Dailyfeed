@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -129,7 +130,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
                 if(mArticle != null) {
                     Intent sendIntent = new Intent();
                     sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, "test");
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, mArticle.getArticleUrl());
                     sendIntent.setType("text/plain");
                     startActivity(sendIntent);
                 }
@@ -158,7 +159,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
 
     private void fillLayout(){
         mTextEventTitle.setText(mArticle.getTitle());
-        mTextArticleDescription.setText(mArticle.getContent());
+        mTextArticleDescription.setText(Html.escapeHtml(mArticle.getContent()));
         mTextArticleDate.setText(mArticle.getPublishedDate());
 
         if(mArticleFavoriteFind){
