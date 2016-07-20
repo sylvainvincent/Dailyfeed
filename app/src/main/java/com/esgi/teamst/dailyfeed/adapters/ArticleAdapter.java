@@ -81,7 +81,9 @@ public class ArticleAdapter extends BaseAdapter {
                     viewHolder.mArticleSource.setText(source.getName());
                 }
             }
-            viewHolder.mArticleDate.setText(new Util().dateDiff(article.getPublishedDate()));
+            if(article.getPublishedDate() != null){
+                viewHolder.mArticleDate.setText(new Util().dateDiff(article.getPublishedDate()));
+            }
             if(article.getThumbnailLink() != null){
                 Log.i(TAG, "getView: " + article.getThumbnailLink());
                 Picasso.with(mContext).load(article.getThumbnailLink())

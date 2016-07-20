@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,12 +80,14 @@ public class XMLParseHandler {
                             //ex : Wed, 04 May 2016 09:05:25 +0000
                             String inputPattern = "EEE, dd MMM yyyy HH:mm:ss Z";
                             String outputPattern = "yyyy-MM-dd hh:mm";
-                            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
-                            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+                            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.getDefault());
+                            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.getDefault());
                             Date date = null;
                             String str = null;
                             try {
-                                date = inputFormat.parse(parser.nextText());
+                                String dateJson = parser.nextText();
+                                Log.i(TAG, "parseXML: " + dateJson);
+                                date = inputFormat.parse(dateJson);
                                 str = outputFormat.format(date);
                                 Log.d("LOG TEST PARSE : ", String.valueOf(date));
                                 Log.d("LOG TEST NEW FORMAT: ", str);
