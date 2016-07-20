@@ -78,7 +78,7 @@ public class XMLParseHandler {
                         }else if(name.equals("pubDate")){
                             //ex : Wed, 04 May 2016 09:05:25 +0000
                             String inputPattern = "EEE, dd MMM yyyy HH:mm:ss Z";
-                            String outputPattern = "dd-MMM-yyyy-h:mm";
+                            String outputPattern = "yyyy-MM-dd hh:mm";
                             SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
                             SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
                             Date date = null;

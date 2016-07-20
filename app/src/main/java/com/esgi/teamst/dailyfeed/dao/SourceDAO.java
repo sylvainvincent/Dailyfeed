@@ -35,7 +35,6 @@ public class SourceDAO extends AbstractDAO<Source> {
             KEY_URL + " TEXT," +
             KEY_AVAILABLE + " INTEGER" + ");" ;
 
-
     public static final String INSERT_DEFAULT = "INSERT INTO " + TABLE_NAME + "(" + KEY_NAME + "," +  KEY_URL + "," +  KEY_AVAILABLE + ") VALUES " +
             "('Phonandroid', '" + FEED_URL_1 + "', 1) ," +
             "('Topito', '" + FEED_URL_2 + "', 1) ," +

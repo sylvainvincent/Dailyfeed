@@ -41,7 +41,7 @@ public class Util {
      */
     public static Date formatStringToDate (String artDate){
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateInString = artDate;
         Date date = null;
         try {
