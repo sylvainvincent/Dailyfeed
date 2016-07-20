@@ -1,6 +1,7 @@
 package com.esgi.teamst.dailyfeed.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,6 +11,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,11 +23,15 @@ import com.esgi.teamst.dailyfeed.models.Article;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  */
 public class ArticleActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = ArticleActivity.class.getSimpleName();
     public static final String EXTRA_ARTICLE_URL = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_URL";
 
     private ImageView mImageArticle;
@@ -158,10 +164,13 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void fillLayout(){
-        mTextEventTitle.setText(mArticle.getTitle());
-        mTextArticleDescription.setText(Html.escapeHtml(mArticle.getContent()));
-        mTextArticleDate.setText(mArticle.getPublishedDate());
 
+        mTextEventTitle.setText(mArticle.getTitle());
+
+
+        mTextArticleDescription.setText(Html.fromHtml(mArticle.getContent()));
+        mTextArticleDate.setText(mArticle.getPublishedDate());
+        Picasso.with(this).load(mArticle.getThumbnailLink()).placeholder(R.drawable.article_picture).into(mImageArticle);
         if(mArticleFavoriteFind){
             Picasso.with(this).load(R.drawable.ic_action_star_filled).into(mFabSave);
             favorite = true;

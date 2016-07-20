@@ -40,6 +40,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
     private FloatingActionButton mFabDisconnection;
     private FloatingActionButton mFabFavoritesList;
     private FloatingActionButton mFabFilter;
+    private FloatingActionButton mFabRefresh;
     private ListView mListViewArticlesMain;
     private SharedPreferences mPrefs = null;
     private List<Source> sourceList;
@@ -118,10 +119,9 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onClick(View v) {
-        Intent intent = null;
         switch (v.getId()){
             case R.id.fab_refresh:
-                // TODO: 12/07/16 Mettre ici la fonction pour actualiser la liste
+                Log.i(TAG, "onClick: refresh");
                     new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(true);
                 break;
             case R.id.fab_filter:
@@ -158,7 +158,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
                 builder.show();
                 break;
             case R.id.fab_disconnection:
-                intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 finish();
                 startActivity(intent);
                 break;
@@ -175,6 +175,8 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             mFabFavoritesList.setOnClickListener(this);
         mFabFilter = (FloatingActionButton) findViewById(R.id.fab_filter);
             mFabFilter.setOnClickListener(this);
+        mFabRefresh = (FloatingActionButton) findViewById(R.id.fab_refresh);
+            mFabRefresh.setOnClickListener(this);
         mListViewArticlesMain = (ListView) findViewById(R.id.list_articles);
         mListViewArticlesMain.setOnItemClickListener(this);
     }

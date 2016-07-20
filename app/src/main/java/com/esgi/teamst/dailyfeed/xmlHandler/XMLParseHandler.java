@@ -18,12 +18,15 @@ import java.util.ArrayList;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by tracysablon on 05/05/2016.
  */
 public class XMLParseHandler {
 
+    private static final String TAG = XMLParseHandler.class.getSimpleName();
     private ArrayList<Article> articles = null;
     private Article currentArticle = null;
     private InputStream in_s;
@@ -57,6 +60,20 @@ public class XMLParseHandler {
                         }else if(name.equals("description")){
                             currentArticle.setContent(parser.nextText());
                             Log.d("LOG PARSE CONTENT : ",currentArticle.getContent());
+                        }else if(name.equals("content:encoded")){
+                            String image = parser.nextText();
+                            Pattern p = Pattern.compile("http(\\S+)jpg");
+                            Matcher m = p.matcher(image);
+                            if(m.find()){
+                                Log.i(TAG, "parseXML: " + m.group());
+                                currentArticle.setThumbnailLink("" + m.group());
+                                Log.d("LOG url : ",currentArticle.getThumbnailLink());
+                            }
+                        }else if(name.equals("media:thumbnail")){
+                            // Cas pour phoneAndroid
+                            Log.i(TAG, "value: " + parser.getAttributeValue(0));
+                            currentArticle.setThumbnailLink(parser.getAttributeValue(0));
+                            parser.nextText();
                         }else if(name.equals("pubDate")){
                             //ex : Wed, 04 May 2016 09:05:25 +0000
                             String inputPattern = "EEE, dd MMM yyyy HH:mm:ss Z";

@@ -85,7 +85,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
 
         Cursor cursor = getSQLiteDb().rawQuery("SELECT * FROM " + TABLE_NAME + "," + SourceDAO.TABLE_NAME +
                 " WHERE " + ArticleDAO.TABLE_NAME + "." + ArticleDAO.KEY_SOURCE_ID + " =  " + SourceDAO.TABLE_NAME + "." + SourceDAO.KEY_ID +
-                " AND " + SourceDAO.KEY_AVAILABLE + " = 1" , null);
+                " AND " + SourceDAO.KEY_AVAILABLE + " = 1 ORDER BY datetime(\"" + KEY_PUBLISHED_DATE + "\") DESC" , null);
 
         if (cursor.getCount() > 0) {
             Log.i(TAG, "getAllAvailablesArticles: " + cursor.getCount());
@@ -139,7 +139,7 @@ public class ArticleDAO extends AbstractDAO<Article> {
         values.put(KEY_TITLE, article.getTitle());
         values.put(KEY_CONTENT, article.getContent());
         values.put(KEY_URL, article.getArticleUrl());
-        values.put(KEY_THUMBNAIL_LINK, article.getArticleUrl());
+        values.put(KEY_THUMBNAIL_LINK, article.getThumbnailLink());
         values.put(KEY_PUBLISHED_DATE, article.getPublishedDate());
         values.put(KEY_IS_FAVORITE,article.isFavorite());
         values.put(KEY_SOURCE_ID, article.getSourceId());
