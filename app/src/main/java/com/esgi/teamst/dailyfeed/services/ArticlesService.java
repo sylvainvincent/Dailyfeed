@@ -1,19 +1,21 @@
 package com.esgi.teamst.dailyfeed.services;
 
-import android.app.KeyguardManager;
 import android.app.Service;
-import android.content.Context;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.esgi.teamst.dailyfeed.dao.ArticleDAO;
+import com.esgi.teamst.dailyfeed.dao.SourceDAO;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.models.Source;
+import com.esgi.teamst.dailyfeed.xmlHandler.XMLParseHandler;
 
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -25,60 +27,64 @@ public class ArticlesService extends Service {
     private static final String TAG = ArticlesService.class.getSimpleName();
     private ArticleDAO mArticleDao;
     private String mProgrammingId;
-    private Timer timer;
-    TimerTask timerTask = new TimerTask() {
+
+    private List<Source> mSources;
+    private Timer mTimer;
+    TimerTask mTimerTask = new TimerTask() {
         @Override
         public void run() {
-            test();
+            getArticles();
         }
     };
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Toast.makeText(getApplicationContext(), "oncreate", Toast.LENGTH_LONG).show();
-
+        mTimer = new Timer();
+        mTimer.schedule(mTimerTask, 10000, 60000);
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "running", Toast.LENGTH_LONG).show();
-        Log.i(TAG, "onStartCommand: running");
-        mProgrammingId = intent.getStringExtra("id");
-        if (timer == null) {
-            timer = new Timer();
-            // On commence dans 10 secondes et on actualise toutes les minutes
-            timer.schedule(timerTask, 10000, 60000);
-        } else {
-            timer.cancel();
-            timerTask.cancel();
-            timer.schedule(timerTask, 10000, 60000);
-        }
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
         return null;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy: destroy");
-        try {
-            timer.cancel();
-            timerTask.cancel();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
-    private void test() {
+    private void getArticles() {
         Log.i(TAG, "test: TEST");
+        SourceDAO sourceDAO = new SourceDAO(this);
+        sourceDAO.open();
+        mSources = sourceDAO.getAllSource();
 
-        // TODO: 12/07/16 Actualiser la liste avec les nouveaux articles
+        ArrayList<Article> articlesList = new XMLParseHandler().loadXmlFeeds(mSources);
+        insertArticles(articlesList);
+    }
+
+    public void insertArticles(List<Article> articles) {
+
+        ArticleDAO articleDAO = new ArticleDAO(this);
+        articleDAO.open();
+
+        for (Article article : articles) {
+            boolean articleFav = false;
+            article.setFavorite(
+                    articleFav);
+            boolean find = articleDAO.add(article);
+            if(find) {
+                Log.d("ARTICLE INSERTED","OK");
+            }
+        }
+        articleDAO.close();
     }
 }

@@ -26,7 +26,6 @@ public class SourceDAO extends AbstractDAO<Source> {
 
     public static final String FEED_URL_1 = "feeds.feedburner.com/Phonandroid";
     public static final String FEED_URL_2 = "feeds.feedburner.com/topito/tip-top";
-
     public static final String FEED_URL_3 = "feeds.feedburner.com/AndroidMtApplication";
 
     public static final String CREATE_TABLE = "CREATE TABLE " +
@@ -40,7 +39,7 @@ public class SourceDAO extends AbstractDAO<Source> {
     public static final String INSERT_DEFAULT = "INSERT INTO " + TABLE_NAME + "(" + KEY_NAME + "," +  KEY_URL + "," +  KEY_AVAILABLE + ") VALUES " +
             "('Phonandroid', '" + FEED_URL_1 + "', 1) ," +
             "('Topito', '" + FEED_URL_2 + "', 1) ," +
-            "('AndroidMtApplication', '" + FEED_URL_3 + "', 1)" ;
+            "('AndroidMtApplication', '" + FEED_URL_3 + "', 1)";
 
     public static final String[] ALL_COLUMNS = {KEY_ID,
             KEY_NAME, KEY_URL, KEY_AVAILABLE};

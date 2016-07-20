@@ -84,6 +84,8 @@ public class DBArticleHandler extends AsyncTask<Boolean, Void, ArrayList<Article
             if(articleResult.size() > 0 && sources.size() > 0){
                 mlistViewArticles.setAdapter(new ArticleAdapter(mContext,articleResult,sources));
             }
+        }else{
+            mlistViewArticles.setAdapter(new ArticleAdapter(mContext, new ArrayList<Article>(), new ArrayList<Source>()));
         }
     }
 

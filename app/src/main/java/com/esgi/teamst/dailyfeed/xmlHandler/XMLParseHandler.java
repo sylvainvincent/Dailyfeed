@@ -61,9 +61,10 @@ public class XMLParseHandler {
                             currentArticle.setContent(parser.nextText());
                             Log.d("LOG PARSE CONTENT : ",currentArticle.getContent());
                         }else if(name.equals("content:encoded")){
-                            String image = parser.nextText();
+                            String content = parser.nextText();
+                            currentArticle.setContent(content);
                             Pattern p = Pattern.compile("http(\\S+)jpg");
-                            Matcher m = p.matcher(image);
+                            Matcher m = p.matcher(content);
                             if(m.find()){
                                 Log.i(TAG, "parseXML: " + m.group());
                                 currentArticle.setThumbnailLink("" + m.group());

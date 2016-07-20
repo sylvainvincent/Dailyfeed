@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
+import com.esgi.teamst.dailyfeed.dao.UserDAO;
 import com.esgi.teamst.dailyfeed.fragments.LoginFragment;
 import com.esgi.teamst.dailyfeed.fragments.RegistrationFragment;
 
@@ -24,11 +25,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final String EXTRA_USER_ID = "com.esgi.teamst.dailyfeed.activities.MainActivity.EXTRA_USER_ID";
+
     private RegistrationFragment mRegistrationFragment;
     private LoginFragment mLoginFragment;
     private TextView mTextActionChange;
     private TextView mTitleMain;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
+
     private boolean mLoginFragmentIsForeground = false;
 
 
@@ -37,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.initViews();
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
+        UserDAO userDAO = new UserDAO(this);
+        userDAO.open();
         mTextActionChange.setOnClickListener(this);
         mLoginFragment = new LoginFragment();
         mRegistrationFragment = new RegistrationFragment();
@@ -63,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
         mTextActionChange = (TextView) findViewById(R.id.text_action_change);
         mTitleMain = (TextView) findViewById(R.id.title_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private void changeFragment(){

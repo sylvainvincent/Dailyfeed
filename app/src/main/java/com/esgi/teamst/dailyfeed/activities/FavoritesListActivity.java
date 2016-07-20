@@ -25,33 +25,33 @@ import java.util.List;
 public class FavoritesListActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = FavoritesListActivity.class.getSimpleName();
-    public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
-    public static final String EXTRA_FROM_FAVORITES = "com.esgi.teamst.dailyfeed.EXTRA_FROM_FAVORITES";
+    public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.extra.ARTICLE_ID";
+    public static final String EXTRA_FROM_FAVORITES = "com.esgi.teamst.dailyfeed.extra.FROM_FAVORITES";
     public static final int REQUEST_ARTICLE = 1;
 
     private ListView mListFavoritesArticles;
     private TextView mTextEmptyList;
 
-    private ArticleFavoriteDAO articleFavoriteDAO;
+    private ArticleFavoriteDAO mArticleFavoriteDAO;
     private ArticleAdapter mArticleAdapter;
-    private List<Article> articles;
+    private List<Article> mArticles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_article_list);
         this.initViews();
-        articleFavoriteDAO = new ArticleFavoriteDAO(this);
-        articleFavoriteDAO.open();
-        articles = articleFavoriteDAO.getAllFavoritesArticles(newsListActivity.mUserId);
-        articleFavoriteDAO.close();
+        mArticleFavoriteDAO = new ArticleFavoriteDAO(this);
+        mArticleFavoriteDAO.open();
+        mArticles = mArticleFavoriteDAO.getAllFavoritesArticles(newsListActivity.mUserId);
+        mArticleFavoriteDAO.close();
 
         SourceDAO sourceDAO = new SourceDAO(this);
         sourceDAO.open();
         List<Source> sources = sourceDAO.getAllSource();
         sourceDAO.close();
-        if(articles != null && sources != null){
-            mArticleAdapter = new ArticleAdapter(this, articles, sources);
+        if(mArticles != null && sources != null){
+            mArticleAdapter = new ArticleAdapter(this, mArticles, sources);
             mListFavoritesArticles.setAdapter(mArticleAdapter);
             mListFavoritesArticles.setOnItemClickListener(this);
         }else{
@@ -77,11 +77,11 @@ public class FavoritesListActivity extends Activity implements AdapterView.OnIte
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_ARTICLE){
             if(resultCode == RESULT_OK){
-                articleFavoriteDAO.open();
-                articles = articleFavoriteDAO.getAllFavoritesArticles(newsListActivity.mUserId);
-                articleFavoriteDAO.close();
-                if(articles != null){
-                    mArticleAdapter.refreshList(articles);
+                mArticleFavoriteDAO.open();
+                mArticles = mArticleFavoriteDAO.getAllFavoritesArticles(newsListActivity.mUserId);
+                mArticleFavoriteDAO.close();
+                if(mArticles != null){
+                    mArticleAdapter.refreshList(mArticles);
                 }else{
                     mArticleAdapter = new ArticleAdapter(this, new ArrayList<Article>(), new ArrayList<Source>());
                     mListFavoritesArticles.setAdapter(mArticleAdapter);

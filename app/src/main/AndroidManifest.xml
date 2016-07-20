@@ -28,6 +28,8 @@
         <activity android:name=".activities.WebArticleActivity"/>
         <activity android:name=".activities.FavoritesListActivity"/>
 
+        <service android:name=".services.ArticlesService"/>
+
     </application>
 
 </manifest>

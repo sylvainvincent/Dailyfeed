@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.adapters.ArticleAdapter;
@@ -42,6 +43,8 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
     private FloatingActionButton mFabFilter;
     private FloatingActionButton mFabRefresh;
     private ListView mListViewArticlesMain;
+    private TextView mTextEmptyArticleList;
+
     private SharedPreferences mPrefs = null;
     private List<Source> sourceList;
     private SourceDAO mSourceDAO;
@@ -74,8 +77,6 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             i++;
         }
 
-
-
     }
 
     @Override
@@ -87,6 +88,8 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(true);
             // using the following line to edit/commit mPrefs
             mPrefs.edit().putBoolean("firstrun", false).commit();
+            // Lancer le service qui récupérer les articles périodiquement
+            startService(new Intent(this, ArticlesService.class));
         }
         else {
           //  new DBArticleHandler(mListViewArticlesMain,newsListActivity.this).execute(false);
@@ -179,6 +182,7 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             mFabRefresh.setOnClickListener(this);
         mListViewArticlesMain = (ListView) findViewById(R.id.list_articles);
         mListViewArticlesMain.setOnItemClickListener(this);
+        mTextEmptyArticleList = (TextView) findViewById(R.id.text_empty_article_list);
     }
 
     @Override
