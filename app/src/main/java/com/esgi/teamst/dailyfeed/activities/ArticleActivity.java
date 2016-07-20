@@ -10,6 +10,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,9 +18,13 @@ import android.widget.TextView;
 import com.esgi.teamst.dailyfeed.R;
 import com.esgi.teamst.dailyfeed.dao.ArticleDAO;
 import com.esgi.teamst.dailyfeed.dao.ArticleFavoriteDAO;
+import com.esgi.teamst.dailyfeed.dao.SourceDAO;
 import com.esgi.teamst.dailyfeed.models.Article;
+import com.esgi.teamst.dailyfeed.models.Source;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  *
@@ -33,6 +38,7 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
     private TextView mTextEventTitle;
     private TextView mTextArticleDescription;
     private TextView mTextArticleDate;
+    private TextView mTextArticleSource;
     private FloatingActionButton mFabSave;
     private FloatingActionButton mFabShare;
     private FloatingActionButton mFabWeb;
@@ -140,20 +146,30 @@ public class ArticleActivity extends AppCompatActivity implements View.OnClickLi
         mTextEventTitle = (TextView) findViewById(R.id.text_event_title);
         mTextArticleDescription = (TextView) findViewById(R.id.text_article_description);
         mTextArticleDate = (TextView) findViewById(R.id.text_article_date);
+        mTextArticleSource = (TextView) findViewById(R.id.text_article_source);
         mFabSave = (FloatingActionButton) findViewById(R.id.fab_save);
-        mFabSave.setOnClickListener(ArticleActivity.this);
+            mFabSave.setOnClickListener(ArticleActivity.this);
         mFabShare = (FloatingActionButton) findViewById(R.id.fab_share);
-        mFabShare.setOnClickListener(this);
+            mFabShare.setOnClickListener(this);
         mFabWeb = (FloatingActionButton) findViewById(R.id.fab_web);
-        mFabWeb.setOnClickListener(this);
+            mFabWeb.setOnClickListener(this);
         mCoordinatorEventDetail = (CoordinatorLayout) findViewById(R.id.coordinator_event_detail);
     }
 
     private void fillLayout(){
 
         mTextEventTitle.setText(mArticle.getTitle());
+        SourceDAO sourceDAO = new SourceDAO(this);
+        sourceDAO.open();
+        List<Source> sources = sourceDAO.getAllSource();
 
-
+        for(Source source : sources){
+            if(source.getId() == mArticle.getSourceId()){
+                Log.i(TAG, "fillLayout: " + source.toString());
+                mTextArticleSource.setText(source.getName());
+            }
+        }
+        sourceDAO.close();
         mTextArticleDescription.setText(Html.fromHtml(mArticle.getContent().replaceAll("<img.+?>", "")));
         mTextArticleDate.setText(mArticle.getPublishedDate());
         Picasso.with(this).load(mArticle.getThumbnailLink()).placeholder(R.drawable.article_picture).into(mImageArticle);

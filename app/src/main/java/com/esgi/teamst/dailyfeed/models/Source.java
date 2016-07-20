@@ -39,4 +39,14 @@ public class Source {
     public void setAvailable(boolean available) {
         this.mAvailable = available;
     }
+
+    @Override
+    public String toString() {
+        return "Source{" +
+                "mId=" + mId +
+                ", mName='" + mName + '\'' +
+                ", mUrl='" + mUrl + '\'' +
+                ", mAvailable=" + mAvailable +
+                '}';
+    }
 }

@@ -22,7 +22,7 @@ import com.esgi.teamst.dailyfeed.models.User;
  */
 public class RegistrationFragment extends Fragment implements View.OnClickListener{
 
-    protected View rootView;
+    protected View mRootView;
     protected EditText mLastNameField;
     protected EditText mFirstNameField;
     protected EditText mEmailField;
@@ -31,21 +31,13 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
     protected FrameLayout mFrameFragment;
     private RegistrationFragmentCallback mRegistrationFragmentCallback;
 
-    public static RegistrationFragment newInstance(String title) {
-        RegistrationFragment fragment = new RegistrationFragment();
-        Bundle args = new Bundle();
-        // args.putString(TITLE, title);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_registration, container, false);
-        initViews(rootView);
+        mRootView = inflater.inflate(R.layout.fragment_registration, container, false);
+        initViews(mRootView);
         mSubscribeButton.setOnClickListener(this);
-        return rootView;
+        return mRootView;
     }
 
     @Override

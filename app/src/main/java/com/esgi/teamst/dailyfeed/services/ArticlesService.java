@@ -25,8 +25,6 @@ import java.util.TimerTask;
 public class ArticlesService extends Service {
 
     private static final String TAG = ArticlesService.class.getSimpleName();
-    private ArticleDAO mArticleDao;
-    private String mProgrammingId;
 
     private List<Source> mSources;
     private Timer mTimer;

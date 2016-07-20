@@ -33,10 +33,10 @@ import java.util.List;
 public class newsListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     public static final String TAG = newsListActivity.class.getSimpleName();
-    public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.EXTRA_ARTICLE_ID";
+    public static final String EXTRA_ARTICLE_ID = "com.esgi.teamst.dailyfeed.extra.ARTICLE_ID";
     public static int mUserId;
 
-    private ArticleAdapter articleAdapter;
+    private ArticleAdapter mArticleAdapter;
 
     private FloatingActionButton mFabDisconnection;
     private FloatingActionButton mFabFavoritesList;
@@ -102,9 +102,9 @@ public class newsListActivity extends AppCompatActivity implements AdapterView.O
             sourceDAO.open();
             List<Source> sources = sourceDAO.getAllSource();
             sourceDAO.close();
-            articleAdapter = new ArticleAdapter(this, articles, sources);
+            mArticleAdapter = new ArticleAdapter(this, articles, sources);
             if(sources != null && articles != null){
-                mListViewArticlesMain.setAdapter(articleAdapter);
+                mListViewArticlesMain.setAdapter(mArticleAdapter);
             }
         }
     }

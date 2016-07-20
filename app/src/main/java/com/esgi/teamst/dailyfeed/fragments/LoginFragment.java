@@ -26,26 +26,17 @@ import java.util.List;
 public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
-    private View rootView;
     private AutoCompleteTextView mAutoCompleteEmail;
     private EditText mEditPassword;
     private FrameLayout frameFragmentLogin;
     private Button mButtonLogin;
     private LoginFragmentCallback mLoginFragmentCallback;
 
- /*   public static LoginFragment newInstance(String title) {
-         fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        // args.putString(TITLE, title);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_login, container, false);
-        initViews(rootView);
+        View mRootView = inflater.inflate(R.layout.fragment_login, container, false);
+        initViews(mRootView);
         UserDAO userDAO = new UserDAO(getActivity());
         userDAO.open();
         List<String> emails = userDAO.getAllEmail();
@@ -78,7 +69,7 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-        return rootView;
+        return mRootView;
     }
 
     @Override

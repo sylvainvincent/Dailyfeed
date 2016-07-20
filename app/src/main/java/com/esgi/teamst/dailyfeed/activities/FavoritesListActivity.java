@@ -65,6 +65,7 @@ public class FavoritesListActivity extends Activity implements AdapterView.OnIte
         if (parent.getId() == R.id.list_favorites_articles) {
             Log.i(TAG, "onItemClick: ");
             Article article = (Article) parent.getItemAtPosition(position);
+            Log.i(TAG, "article: " + article.toString());
             Intent articleActivityIntent = new Intent(FavoritesListActivity.this, ArticleActivity.class);
             articleActivityIntent.putExtra(EXTRA_ARTICLE_ID, article.getId());
             articleActivityIntent.putExtra(EXTRA_FROM_FAVORITES, true);
