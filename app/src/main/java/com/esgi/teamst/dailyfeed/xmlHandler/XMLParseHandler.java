@@ -80,8 +80,8 @@ public class XMLParseHandler {
                             //ex : Wed, 04 May 2016 09:05:25 +0000
                             String inputPattern = "EEE, dd MMM yyyy HH:mm:ss Z";
                             String outputPattern = "yyyy-MM-dd hh:mm";
-                            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.getDefault());
-                            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.getDefault());
+                            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.ENGLISH);
+                            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.ENGLISH);
                             Date date = null;
                             String str = null;
                             try {
